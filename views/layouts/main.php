@@ -50,6 +50,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
+    <?php
+    if (Yii::$app->controller->id == 'admin') {
+        echo Html::cssFile('@web/css/admin.css');
+    }
+    ?>
 </head>
 <body>
 <!-- Header -->
