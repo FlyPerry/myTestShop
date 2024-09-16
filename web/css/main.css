@@ -1,0 +1,166 @@
+.service-block {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.service-block img {
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Overlay для текста */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Текст внутри overlay */
+.text {
+    color: white;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* Эффекты при наведении */
+.service-block:hover img {
+    filter: blur(5px);
+    transform: scale(1.1);
+}
+
+.service-block:hover .overlay {
+    opacity: 1;
+}
+
+.category-woman {
+    height: 80vh;
+    align-content: center;
+}
+
+.category-man {
+    height: 80vh;
+    align-content: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.catalog .sidebar {
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.catalog .sidebar h5 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.catalog .category-list {
+    list-style: none;
+    padding: 0;
+}
+
+.catalog .category-list li {
+    margin-bottom: 10px;
+}
+
+.catalog .category-list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.catalog .category-list li a.active {
+    font-weight: bold;
+    color: black;
+}
+
+.catalog .products-count {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.catalog .product-item {
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 100%;
+}
+
+.catalog .product-item p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+.product-main {
+    padding: 20px 0;
+}
+
+.product-image img {
+    width: 100%;
+}
+
+.product-details h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.similar-products .card {
+    margin: 10px;
+}
+
+.footer {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+}
+
+.footer a {
+    color: #000;
+    text-decoration: none;
+}
+
+.footer .social-media a {
+    margin: 0 10px;
+    color: #000;
+}
+
+.modal-header-custom {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-footer-custom {
+    justify-content: space-between;
+}
+
+.btn-custom-facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.btn-custom-google {
+    background-color: #db4437;
+    color: white;
+}
