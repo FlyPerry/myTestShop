@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     // Обработчик нажатия кнопки "Выбрать"
     $('.changeCityBtn').on('click', function() {
         // Получаем выбранные данные

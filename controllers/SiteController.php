@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\RegisterForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\Cookie;
@@ -70,6 +71,8 @@ class SiteController extends Controller
         }
 
         // Если куки существует, выводим стандартную домашнюю страницу
+
+
         return $this->render('index');
     }
 
@@ -111,4 +114,28 @@ class SiteController extends Controller
 
         return ['success' => false];
     }
+
+    // Registration action
+    public function actionLogin()
+    {
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->redirect(['site/index']);
+        }
+
+        return $this->render('index');
+    }
+
+    public function actionRegister()
+    {
+        $model = new RegisterForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
+            return $this->redirect(['site/index']);
+        }
+
+        return $this->render('index');
+    }
+
 }

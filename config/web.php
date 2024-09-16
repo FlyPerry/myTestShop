@@ -17,12 +17,16 @@ $config = [
             'cookieValidationKey' => 'CtpIQgV053bKxqAz4eRYBpr2sjk_zuJv',
             'enableCsrfValidation' => false, // CSRF защита включена
         ],
+        'session' => [
+            'class' => 'yii\web\Session',
+            'timeout' => 3600,
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true, // Убедитесь, что эта опция включена
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -48,6 +52,9 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'site/submit-changed-city' => 'site/submit-changed-city',
+                'site/index' => 'site/index',
+                'site/login' => 'site/login',
+                'site/register' => 'site/register',
                 // Другие правила маршрутизации
             ],
         ],

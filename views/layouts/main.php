@@ -11,9 +11,13 @@ use yii\bootstrap5\BaseHtml;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use app\models\RegisterForm;
+use app\models\LoginForm;
 
 AppAsset::register($this);
-
+$registerModel = new RegisterForm();
+$loginModel = new LoginForm();
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
@@ -95,19 +99,30 @@ if ($cookies->has('ChangedCity')): ?>
                     </div>
                 </li>
 
-                <!-- Login/Register Button with User Icon -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">
-                        <i class="fa fa-user" aria-hidden="true"></i> Вход / Регистрация
-                    </a>
-                </li>
+                <?php if (Yii::$app->user->isGuest): ?>
+                    <!-- Login/Register Button with User Icon -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">
+                            <i class="fa fa-user" aria-hidden="true"></i> Вход / Регистрация
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authUserInfoModal">
+                            <i class="fa fa-user" aria-hidden="true"></i> <?= Yii::$app->user->identity->getEmail() ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
 <?php endif; ?>
+
+<?php if (Yii::$app->user->isGuest): ?>
+
 <!-- Modal -->
 <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-centered" style="max-width: 30vw;">
         <div class="modal-content">
             <div class="modal-header modal-header-custom">
                 <h5 class="modal-title" id="authModalLabel">Регистрация / Вход</h5>
@@ -129,43 +144,97 @@ if ($cookies->has('ChangedCity')): ?>
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <form>
-                            <div class="mb-3">
-                                <label for="registerEmail" class="form-label">Эл.Почта</label>
-                                <input type="email" class="form-control" id="registerEmail"
-                                       aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="registerPassword" class="form-label">Пароль</label>
-                                <input type="password" class="form-control" id="registerPassword">
-                            </div>
-                            <div class="mb-3">
-                                <label for="registerConfirmPassword" class="form-label">Подтвердите пароль</label>
-                                <input type="password" class="form-control" id="registerConfirmPassword">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        </form>
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'registerForm',
+                            'action' => ['site/register'],
+                            'options' => ['class' => 'form'],
+                        ]); ?>
+
+                        <div class="mb-3">
+                            <?= $form->field($registerModel, 'email')->textInput(['type' => 'email', 'class' => 'form-control'])->label('Эл.Почта') ?>
+                        </div>
+                        <div class="mb-3">
+                            <?= $form->field($registerModel, 'password')->passwordInput(['class' => 'form-control'])->label('Пароль') ?>
+                        </div>
+                        <div class="mb-3">
+                            <?= $form->field($registerModel, 'confirmPassword')->passwordInput(['class' => 'form-control'])->label('Подтвердите пароль') ?>
+                        </div>
+
+                        <div class="mb-3 text-end">
+                            <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::button('Закрыть', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
+                        </div>
+
+                        <?php ActiveForm::end(); ?>
                     </div>
                     <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
-                        <form>
-                            <div class="mb-3">
-                                <label for="loginEmail" class="form-label">Эл.Почта</label>
-                                <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="loginPassword" class="form-label">Пароль</label>
-                                <input type="password" class="form-control" id="loginPassword">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Войти</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        </form>
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'loginForm',
+                            'action' => ['site/login'],
+                            'options' => ['class' => 'form'],
+                        ]); ?>
+
+                        <div class="mb-3">
+                            <?= $form->field($loginModel, 'email')->textInput(['type' => 'email', 'class' => 'form-control'])->label('Эл.Почта') ?>
+                        </div>
+                        <div class="mb-3">
+                            <?= $form->field($loginModel, 'password')->passwordInput(['class' => 'form-control'])->label('Пароль') ?>
+                        </div>
+
+                        <div class="mb-3 text-end">
+                            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::button('Закрыть', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
+                        </div>
+
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php else: ?>
+
+    <!-- Modal -->
+    <div class="modal fade" id="authUserInfoModal" tabindex="-1" aria-labelledby="authUserInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authUserInfoModalLabel">Информация о пользователе</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="https://placehold.co/100x100" class="rounded-circle mb-3" alt="Profile picture of authenticated user with a neutral background">
+                        <h4>AlexPolyakov</h4>
+                        <p><?=Yii::$app->user->identity->getEmail();?></p>
+                        <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
+                    </div>
+                    <hr>
+                    <h5>Дополнительная информация</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Зарегестрирован:</strong> 15 Июля , 2024 г.</li>
+                        <li><strong>Последняя авторизация:</strong> 25 Июля, 2024 г.</li>
+                        <li><strong>Роль:</strong> ADMIN </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Редактировать профиль</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>
+
+
+<!-- Optional: include Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <main id="main" class="flex-shrink-0" role="main">
     <?php if (!empty($this->params['breadcrumbs'])): ?>
         <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
