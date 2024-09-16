@@ -138,4 +138,22 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    /**
+     * Логика выхода пользователя
+     * @return Response
+     */
+    public function actionLogout()
+    {
+        // Проверяем, авторизован ли пользователь
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        // Выполняем выход
+        Yii::$app->user->logout();
+
+        // Перенаправляем пользователя на главную страницу или любую другую
+        return $this->goHome();
+    }
+
 }
