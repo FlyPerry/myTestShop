@@ -1,5 +1,4 @@
 <?php
-echo $s;
 ?>
 <div class="tab-pane fade" id="users-tab">
     <div class="container mt-5">
