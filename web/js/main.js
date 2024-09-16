@@ -32,4 +32,12 @@ $(document).ready(function() {
             }
         });
     });
+    $('#search-addon').on('input', function() {
+        var query = $(this).val().toLowerCase();
+        $('ul.list-unstyled li').each(function() {
+            var text = $(this).text().toLowerCase();
+            $(this).toggle(text.indexOf(query) !== -1);
+        });
+    });
+
 });

@@ -1,4 +1,12 @@
-<div class="tab-pane fade" id="catalog-tab">
+<?php
+/**
+ * @var $user \app\models\User
+ * @var $userInfo \app\models\UserInfo
+ * @var $active integer
+ */
+$show = ($active == 1) ? 'show active' :'';
+?>
+<div class="tab-pane fade <?=$show?>" id="catalog-tab">
     <h2>Admin Panel - Catalog</h2>
     <table class="table table-striped table-bordered">
         <thead>

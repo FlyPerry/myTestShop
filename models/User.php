@@ -22,6 +22,13 @@ class User extends ActiveRecord implements IdentityInterface
             ['password_hash', 'string'],
         ];
     }
+    public function attributeLabels()
+    {
+
+        return [
+            'email' => 'Почта/Логин',
+        ];
+    }
 
     public static function findByEmail($email)
     {
@@ -74,7 +81,22 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->email;
     }
 
-    public function getRole(){
+    public function getRole()
+    {
         return $this->role;
+    }
+
+    public function getUserInfo()
+    {
+        return $this->hasOne(UserInfo::class, ['user_id' => 'id']);
+    }
+    public function getLastname()
+    {
+        return $this->userInfo ? $this->userInfo->lastname : null;
+    }
+
+    public function getFirstname()
+    {
+        return $this->userInfo ? $this->userInfo->firstname : null;
     }
 }

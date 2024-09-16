@@ -42,4 +42,8 @@ class CatalogController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionProduct($id = 0){
+        return $this->render('product');
+    }
 }

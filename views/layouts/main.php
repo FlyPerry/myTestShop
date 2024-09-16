@@ -148,7 +148,7 @@ if ($cookies->has('ChangedCity')): ?>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="register" role="tabpanel"
+                        <div class="tab-pane fade show active mt-3" id="register" role="tabpanel"
                              aria-labelledby="register-tab">
                             <?php $form = ActiveForm::begin([
                                 'id' => 'registerForm',
@@ -173,7 +173,7 @@ if ($cookies->has('ChangedCity')): ?>
 
                             <?php ActiveForm::end(); ?>
                         </div>
-                        <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <div class="tab-pane fade mt-3" id="login" role="tabpanel" aria-labelledby="login-tab">
                             <?php $form = ActiveForm::begin([
                                 'id' => 'loginForm',
                                 'action' => ['site/login'],
@@ -281,9 +281,9 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     </footer>
 <?php endif; ?>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <?php $this->endBody() ?>
 <script>
     // Initialize Bootstrap tooltip
