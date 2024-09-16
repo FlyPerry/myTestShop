@@ -50,11 +50,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
-    <?php
-    if (Yii::$app->controller->id == 'admin') {
-        echo Html::cssFile('@web/css/admin.css');
-    }
-    ?>
+    <?=Html::cssFile('@web/css/'.Yii::$app->controller->id.'.css');?>
 </head>
 <body>
 <!-- Header -->
@@ -234,7 +230,7 @@ if ($cookies->has('ChangedCity')): ?>
                     <?php if (Yii::$app->user->identity->getRole() == 1)
                         echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
                     ?>
-                    <?= Html::a('Редактировать профиль', '/user/update', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Личный кабинет', '/user', ['class' => 'btn btn-primary']) ?>
                     <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
                 </div>
             </div>
