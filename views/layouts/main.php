@@ -219,7 +219,10 @@ if ($cookies->has('ChangedCity')): ?>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Редактировать профиль</button>
+                    <?php if(Yii::$app->user->identity->getRole() == 1)
+                            echo Html::a('Админ Панель','/admin',['class'=>'btn btn-info']);
+                        ?>
+                    <?= Html::a('Редактировать профиль','/user/update',['class'=>'btn btn-primary'])?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
