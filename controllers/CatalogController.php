@@ -2,7 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Catalog;
+use app\models\Category;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 
@@ -40,10 +43,40 @@ class CatalogController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect('/');
     }
 
-    public function actionProduct($id = 0){
-        return $this->render('product');
+    public function actionMan($id = NULL)
+    {
+        $queryCategories = Category::find()->andWhere(['type' => 'man']);
+        $categoriesList = $queryCategories->all();
+        if (!is_null($id)) {
+            $queryCategories->andWhere(['id' => $id]);
+        }
+        $categoriesFilter = $queryCategories->all();
+        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
+
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray])->all();
+        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'man']);
+    }
+
+    public function actionWomen($id = NULL)
+    {
+        $queryCategories = Category::find()->andWhere(['type' => 'women']);
+        $categoriesList = $queryCategories->all();
+        if (!is_null($id)) {
+            $queryCategories->andWhere(['id' => $id]);
+        }
+        $categoriesFilter = $queryCategories->all();
+        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
+
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray])->all();
+        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'women']);
+    }
+
+    public function actionProduct($id)
+    {
+        $productInfo = Catalog::findOne($id);
+        return $this->render('product',['productInfo'=>$productInfo]);
     }
 }

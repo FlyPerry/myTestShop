@@ -4,9 +4,8 @@
  * @var $userInfo \app\models\UserInfo
  * @var $active integer
  */
-$show = ($active == 1) ? 'show active' : '';
 ?>
-<div class="tab-pane fade <?= $show ?>" id="help-tab">
+<div class="tab-pane fade show active" id="help-tab">
     <h2 class="mb-4"><i class="fas fa-question-circle"></i> Часто задаваемые вопросы (ЧАВО)</h2>
     <div class="accordion" id="faqAccordion">
         <div class="accordion-item">

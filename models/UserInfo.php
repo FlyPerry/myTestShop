@@ -6,6 +6,7 @@ use yii\db\ActiveRecord;
 
 class UserInfo extends ActiveRecord
 {
+
     public static function tableName()
     {
         return '{{%user_info}}';
@@ -38,5 +39,10 @@ class UserInfo extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getFio()
+    {
+        return $this->lastname . ' ' . $this->firstname;
     }
 }

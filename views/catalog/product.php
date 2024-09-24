@@ -1,9 +1,20 @@
+<?php
+/**
+ * @var Catalog $productInfo
+ *
+ */
+
+use app\models\Catalog;
+use yii\helpers\Html;
+
+?>
 <div class="container product-main">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Главная</a></li>
-            <li class="breadcrumb-item"><a href="#">Headphones</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Balo Headphones 700 Wireless Noise Cancelling</li>
+            <li class="breadcrumb-item"><?= Html::a('Главная', '/') ?></li>
+            <li class="breadcrumb-item"><?= Html::a($productInfo->getCategory()->one()->getTranslatedType(), $productInfo->getUrlCategoryTypeBreadcrumb()); ?></li>
+            <li class="breadcrumb-item"><?= Html::a($productInfo->categoryName, $productInfo->getUrlCategoryBreadcrumb()); ?></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $productInfo->name; ?></li>
         </ol>
     </nav>
     <div class="row">
@@ -12,31 +23,38 @@
             <div id="productCarousel" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://placehold.co/500x500" class="d-block w-100" alt="Black wireless headphones on a white background" data-bs-toggle="modal" data-bs-target="#productModal">
+                        <img src="https://placehold.co/500x500" class="d-block w-100"
+                             alt="Black wireless headphones on a white background" data-bs-toggle="modal"
+                             data-bs-target="#productModal">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/500x500/ff0000/ffffff" class="d-block w-100" alt="Another view of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
+                        <img src="https://placehold.co/500x500/ff0000/ffffff" class="d-block w-100"
+                             alt="Another view of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/500x500/00ff00/ffffff" class="d-block w-100" alt="Close-up of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
+                        <img src="https://placehold.co/500x500/00ff00/ffffff" class="d-block w-100"
+                             alt="Close-up of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
                     </div>
                     <!-- Add more items as needed -->
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                        data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+                        data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
         </div>
         <div class="col-md-6 product-details">
-            <h1>Balo Headphones 700 Wireless Noise Cancelling</h1>
-            <p>I'm a product description. This is a great place to "sell" your product and grab buyers' attention.
-                Describe your product in detail.</p>
-            <button class="btn btn-primary w-100" data-bs-target="#sellerInfoModal" data-bs-toggle="modal">Связаться с продавцом</button>
+            <h1><?= $productInfo->name; ?></h1>
+            <p><?= $productInfo->description; ?></p>
+            <button class="btn btn-primary w-100" data-bs-target="#sellerInfoModal" data-bs-toggle="modal">Связаться с
+                продавцом
+            </button>
         </div>
     </div>
 
@@ -60,19 +78,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sellerInfoModalLabel">Seller Information</h5>
+                    <h5 class="modal-title" id="sellerInfoModalLabel">Информация о продавце</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <h4>John Doe</h4>
-                            <p>John has been a top seller on our platform for over 5 years, specializing in handmade
-                                crafts
-                                and unique gifts. His attention to detail and customer service has earned him a stellar
-                                reputation.</p>
-                            <p><strong>Contact:</strong> john.doe@example.com</p>
-                            <p><strong>Phone:</strong> (123) 456-7890</p>
+                            <h4><?= $productInfo->getUser()->one()->getUserInfo()->one()->getFio() ?></h4>
+                            <p><?= $productInfo->getUser()->one()->getUserInfo()->one()->bio; ?></p>
+                            <p><strong>email: </strong><?= $productInfo->getUser()->one()->email ?></p>
+                            <p><strong>Телефон для
+                                    связи: </strong><?= $productInfo->getUser()->one()->getUserInfo()->one()->contactPhone; ?>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +170,7 @@
 </div>
 <script>
     document.querySelectorAll('#productCarousel .carousel-item img').forEach(img => {
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             document.getElementById('modalImage').src = this.src;
         });
     });

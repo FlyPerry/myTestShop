@@ -1,7 +1,14 @@
-$(document).ready(function() {
 
+$(document).ready(function () {
+    $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
+
+// initialize plugin with defaults
+    $("#fileUploader").fileinput();
+
+// with plugin options
+    $("#fileUploader").fileinput({'showUpload':false, 'previewFileType':'any'});
     // Обработчик нажатия кнопки "Выбрать"
-    $('.changeCityBtn').on('click', function() {
+    $('.changeCityBtn').on('click', function () {
         // Получаем выбранные данные
         var selectedCity = $('#city-select').val();
         var selectedDistrict = $('#district-select').val();
@@ -17,7 +24,7 @@ $(document).ready(function() {
                 neighborhood: selectedNeighborhood,
                 _csrf: yii.getCsrfToken() // Для защиты от CSRF-атак
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Закрыть модальное окно
                     $('#locationModal').modal('hide');
@@ -27,17 +34,53 @@ $(document).ready(function() {
                     alert('Произошла ошибка при сохранении данных.');
                 }
             },
-            error: function() {
+            error: function () {
                 alert('Не удалось отправить данные.');
             }
         });
     });
-    $('#search-addon').on('input', function() {
+    $('#search-addon').on('input', function () {
         var query = $(this).val().toLowerCase();
-        $('ul.list-unstyled li').each(function() {
+        $('ul.list-unstyled li').each(function () {
             var text = $(this).text().toLowerCase();
             $(this).toggle(text.indexOf(query) !== -1);
         });
     });
+    $(document).on('click', '.toggle-status-btn', function (e) {
+        e.preventDefault();
 
+        var button = $(this);
+        var productId = button.data('id');
+        var currentStatus = button.data('status');
+
+        var newStatus = currentStatus ? 'Отключить' : 'Включить';
+        var newClass = currentStatus ? 'btn-danger' : 'btn-success';
+        var newIcon = currentStatus ? 'toggle-off' : 'toggle-on';
+
+        $.ajax({
+            url: '/user/change-active-order', // Маршрут до экшна
+            type: 'POST',
+            data: {
+                id: productId,
+                status: currentStatus,
+                _csrf: yii.getCsrfToken() // Защита от CSRF атак
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Изменяем текст и цвет кнопки на противоположное
+
+
+                    button.data('status', response.deleted);
+                    button.removeClass('btn-danger btn-success').addClass(newClass);
+                    button.find('i').removeClass('fa-toggle-off fa-toggle-on').addClass('fa-' + newIcon);
+                    button.find('.status-text').text(newStatus);
+                } else {
+                    alert('Произошла ошибка при изменении статуса.');
+                }
+            },
+            error: function () {
+                alert('Ошибка на сервере. Попробуйте позже.');
+            }
+        });
+    });
 });

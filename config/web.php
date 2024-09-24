@@ -58,6 +58,10 @@ $config = [
                 'site/index' => 'site/index',
                 'site/login' => 'site/login',
                 'site/register' => 'site/register',
+                'catalog/man/<id:\d+>' => 'catalog/man',
+                'catalog/women/<id:\d+>' => 'catalog/women',
+                'catalog/product/<id:\d+>' => 'catalog/product',
+                'user/order/update/<id:\d+>' => 'user/orders-update',
                 // Другие правила маршрутизации
             ],
         ],

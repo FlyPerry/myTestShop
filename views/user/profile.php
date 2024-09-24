@@ -6,10 +6,9 @@ use yii\widgets\ActiveForm;
  * @var $userInfo \app\models\UserInfo
  * @var $active integer
  */
-$show = ($active == 1) ? 'show active' :'';
 ?>
 
-<div class="tab-pane fade <?=$show?>" id="users-tab">
+<div class="tab-pane fade show active" id="users-tab">
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">

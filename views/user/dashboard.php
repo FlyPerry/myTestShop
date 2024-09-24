@@ -4,9 +4,8 @@
  * @var $userInfo \app\models\UserInfo
  * @var $active integer
  */
-$show = ($active == 1) ? 'show active' :'';
 ?>
-<div class="tab-pane fade <?=$show?>" id="dashboard-tab">
+<div class="tab-pane fade show active" id="dashboard-tab">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2>Catalog Overview</h2>
         <div class="btn-toolbar mb-2 mb-md-0">

@@ -40,6 +40,11 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
 }
-
+.alert{
+    text-align: center;
+    padding-left: 20%;
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
 
 

@@ -13,14 +13,14 @@ $this->title = 'My Yii Application';
                 <div class="category category-woman bg-danger text-white align-middle text-center p-5">
                     <h2>Товары для девушек</h2>
                     <p>Woman</p>
-                    <a href="#" class="btn btn-light">Shop</a>
+                    <a href="/catalog/women" class="btn btn-light">Shop</a>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="category category-man bg-primary text-white align-middle text-center p-5">
                     <h2>Товары для мужчин</h2>
                     <p>Man</p>
-                    <a href="#" class="btn btn-light">Shop</a>
+                    <a href="/catalog/man" class="btn btn-light">Shop</a>
                 </div>
             </div>
         </div>

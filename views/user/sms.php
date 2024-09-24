@@ -4,9 +4,8 @@
  * @var $userInfo \app\models\UserInfo
  * @var $active integer
  */
-$show = ($active == 1) ? 'show active' : '';
 ?>
-<div class="tab-pane fade <?= $show ?>" id="messages-tab">
+<div class="tab-pane fade show active" id="messages-tab">
     <section>
         <div>
             <div class="row">

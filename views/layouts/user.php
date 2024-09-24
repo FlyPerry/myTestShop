@@ -24,7 +24,10 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$active = Yii::$app->view->params['active'];
+
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,11 +43,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all"
+          rel="stylesheet" type="text/css"/>
     <title>TechSheld</title>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/piexif.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/sortable.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/ru.js"></script>
     <link href="/css/site.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
-    <?=Html::cssFile('@web/css/'.Yii::$app->controller->id.'.css');?>
+    <?= Html::cssFile('@web/css/' . Yii::$app->controller->id . '.css'); ?>
 </head>
 <body>
 <!-- Header -->
@@ -65,7 +80,8 @@ if ($cookies->has('ChangedCity')): ?>
 
                 <!-- Dropdown for City Selection -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="cityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="cityDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Город: Павлодар
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="cityDropdown">
@@ -78,7 +94,8 @@ if ($cookies->has('ChangedCity')): ?>
 
                 <!-- Language Selection with Flags -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
@@ -90,7 +107,6 @@ if ($cookies->has('ChangedCity')): ?>
                             </a></li>
                     </ul>
                 </li>
-
 
 
                 <?php if (Yii::$app->user->isGuest): ?>
@@ -230,13 +246,57 @@ if ($cookies->has('ChangedCity')): ?>
 <?php endif; ?>
 
 
-
 <main id="main" class="flex-shrink-0" role="main">
     <?php if (!empty($this->params['breadcrumbs'])): ?>
         <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
     <?php endif ?>
     <?= Alert::widget() ?>
-    <?= $content ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Личный кабинет</h4>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a href="/user/dashboard"
+                           class="nav-link <?= isset($active['dashboard']) ? $active['dashboard'] : '' ?>">
+                            <i class="fa-solid fa-table-list"></i> Инф. Панель
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user/profile"
+                           class="nav-link <?= isset($active['profile']) ? $active['profile'] : '' ?>"><i
+                                    class="fa-regular fa-id-badge"></i>
+                            Мой профиль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user/orders"
+                           class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?> "><i
+                                    class="fa-solid fa-bars-staggered"></i>
+                            Мои товары</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
+                                    class="fas fa-envelope"></i>
+                            Сообщения</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user/help" class="nav-link <?= isset($active['help']) ? $active['help'] : '' ?>"><i
+                                    class="fas fa-question-circle"></i>
+                            Помощь</a>
+                    </li>
+                    <li class="nav-item">
+                        <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> Выйти', '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
+
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-9 col-lg-10 content tab-content">
+                <?= $content ?>
+            </div>
+        </div>
+    </div>
+
 </main>
 <?php
 if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>

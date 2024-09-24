@@ -1,4 +1,14 @@
 <?php
+/**
+ * @var Category $categoriesList
+ * @var Catalog $catalogList ;
+ * @var string $type
+ */
+
+use app\models\Catalog;
+use app\models\Category;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
@@ -10,18 +20,14 @@
                 <div class="sidebar">
                     <h5>Выберите категорию</h5>
                     <ul class="category-list">
-                        <li><a href="#">Best Sellers</a></li>
-                        <li><a href="#">Computers</a></li>
-                        <li><a href="#">Drones & Cameras</a></li>
-                        <li><a href="#" class="active">Headphones</a></li>
-                        <li><a href="#">Home Page Best Sellers</a></li>
-                        <li><a href="#">Home Page Sale</a></li>
-                        <li><a href="#">Mobile</a></li>
-                        <li><a href="#">Sale</a></li>
-                        <li><a href="#">Speakers</a></li>
-                        <li><a href="#">Tablets</a></li>
-                        <li><a href="#">TV & Home Cinema</a></li>
-                        <li><a href="#">Wearable Tech</a></li>
+                        <li><a href="/catalog/<?= $type; ?>">Все категории</a></li>
+                        <?php foreach ($categoriesList as $category): ?>
+                            <li>
+                                <?= Html::a($category->name
+                                    , Url::to('/catalog/' . $category->type . '/' . $category->id))
+                                ?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
@@ -30,78 +36,14 @@
             <div class="col-md-9">
                 <div class="row">
                     <!-- Product item -->
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Balo Headphones" class="img-fluid">
-                                <p>Balo Headphones 700 Wireless Noise Cancelling</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Certified Pantony" class="img-fluid">
-                                <p>Certified Pantony Buds Wireless Earbud Headphones</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="Drums Pro" class="img-fluid">
-                                <p>Drums Pro Wireless On-Ear Headphones</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <a href="product.html">
-                            <div class="product-item">
-                                <img src="https://via.placeholder.com/200" alt="In-ear Noise Cancelling" class="img-fluid">
-                                <p>In-ear Noise Cancelling & Isolating Wireless Earbuds</p>
-                            </div>
-                        </a>
-                    </div>
+                    <?php foreach ($catalogList as $product): ?>
+                        <div class="col-md-3 mb-4">
+                            <?php $insideHtml = Html::tag('div',
+                                Html::img('https://via.placeholder.com/200', ['alt' => $product->name, 'class' => 'img-fluid']) .
+                                Html::tag('p', $product->name), ['class' => 'product-item']); ?>
+                            <?= Html::a($insideHtml, '/catalog/product/' . $product->id); ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
