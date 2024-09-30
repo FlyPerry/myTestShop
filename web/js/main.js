@@ -1,12 +1,6 @@
 
 $(document).ready(function () {
-    $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
 
-// initialize plugin with defaults
-    $("#fileUploader").fileinput();
-
-// with plugin options
-    $("#fileUploader").fileinput({'showUpload':false, 'previewFileType':'any'});
     // Обработчик нажатия кнопки "Выбрать"
     $('.changeCityBtn').on('click', function () {
         // Получаем выбранные данные
