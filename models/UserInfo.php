@@ -3,7 +3,12 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
+/**
+ * @property string|null $firstname
+ * @property string|null $lastname
+ */
 class UserInfo extends ActiveRecord
 {
 
@@ -43,6 +48,13 @@ class UserInfo extends ActiveRecord
 
     public function getFio()
     {
-        return $this->lastname . ' ' . $this->firstname;
+        $firstname = ($this->firstname !== false) ? $this->firstname : '';
+        $lastname = ($this->lastname !== false) ? $this->lastname : '';
+
+        return $lastname . ' ' . $firstname;
+    }
+
+    public function getPhoto(){
+        return !is_null($this->photo) ? '/'.$this->photo : "https://placehold.co/150x150";
     }
 }

@@ -13,8 +13,8 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <div class="col-md-4">
                 <div class="text-center">
-                    <img src="<?= $userInfo->photo ? $userInfo->photo : 'https://placehold.co/150x150' ?>" alt="Profile picture" class="profile-img">
-                    <h2 class="mt-3"><?= $user->lastname . ' ' . $user->firstname ?></h2>
+                    <img src="<?= $userInfo->getPhoto(); ?>" alt="Profile picture" class="profile-img w-100">
+                    <h2 class="mt-3"><?= $userInfo->getFio(); ?></h2>
                 </div>
             </div>
             <div class="col-md-8">
@@ -27,7 +27,6 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($userInfo, 'bio')->textarea(['rows' => 3, 'value' => $userInfo->bio]) ?>
                 <?= $form->field($userInfo, 'photo')->fileInput() ?>
                 <?= $form->field($userInfo, 'contactPhone')->textInput(['value' => $userInfo->contactPhone]) ?>
-                <?= $form->field($userInfo, 'city')->textInput(['value' => $userInfo->city]) ?>
 
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <?php ActiveForm::end(); ?>

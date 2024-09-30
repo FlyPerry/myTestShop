@@ -50,14 +50,6 @@ class UserController extends Controller
         ];
     }
 
-    /**
-     * Действие отображения списка пользователей
-     */
-    public function actionIndex($active = 'dashboard')
-    {
-        $this->redirect('/user/dashboard');
-    }
-
     public function actionDashboard()
     {
         Yii::$app->view->params['active'] = ['dashboard' => 'active'];

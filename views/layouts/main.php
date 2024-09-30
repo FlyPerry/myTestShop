@@ -220,7 +220,7 @@ if ($cookies->has('ChangedCity')): ?>
                     <?php if (Yii::$app->user->identity->getRole() == 1)
                         echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
                     ?>
-                    <?= Html::a('Личный кабинет', '/user', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Личный кабинет', '/user/dashboard', ['class' => 'btn btn-primary']) ?>
                     <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
                 </div>
             </div>
