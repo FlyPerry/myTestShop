@@ -43,7 +43,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- jQuery (необязательно, если вы используете только Bootstrap JS без jQuery) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -266,22 +266,20 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5><?=Yii::t('app','dayu');?></h5>
-                    <h5><?=Yii::t('app','beru');?></h5>
-                    <p>Address: 123 City</p>
-                    <p>Phone: 7777777777</p>
+                    <h5><?=Yii::t('app','dayu').' '.Yii::t('app','free');?></h5>
+                    <h5><?=Yii::t('app','beru').' '.Yii::t('app','free');?></h5>
+
                 </div>
                 <div class="col-md-4">
-                    <h5>Shop</h5>
+                    <h5><?=Yii::t('app','social')?></h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Computers</a></li>
-                        <li><a href="#" class="text-white">Tablets</a></li>
+                        <li><a href="https://www.instagram.com/asar.club/" class="text-white"><i style="color: red" class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5>Customer Support</h5>
+                    <h5><?=Yii::t('app','support')?></h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Contact Us</a></li>
+                        <li><a href="mailto:asar.club.kz@gmail.com" class="text-white"><?=Yii::t('app','email')?>: asar.club.kz@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
