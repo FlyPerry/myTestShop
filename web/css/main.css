@@ -45,6 +45,9 @@
 .category-woman {
     height: 80vh;
     align-content: center;
+    background-image: url("/img/mainCatButtons.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .category-man {

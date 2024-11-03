@@ -1,5 +1,8 @@
 <?php
 
+use yii\helpers\Url;
+use yii\helpers\Html;
+
 /** @var yii\web\View $this */
 
 $this->title = 'My Yii Application';
@@ -9,130 +12,28 @@ $this->title = 'My Yii Application';
 <section class="categories py-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="category category-woman bg-danger text-white align-middle text-center p-5">
-                    <h2>Товары для девушек</h2>
-                    <p>Woman</p>
-                    <a href="/catalog/women" class="btn btn-light">Shop</a>
+            <div class="col-md-12">
+                <div class="category position-relative category-woman bg-danger text-white align-middle text-center p-5 position-relative">
+                    <div class="dayuButton position-absolute top-0 start-0 p-3">
+                        <a href="/catalog/women" class="btn btn-danger" style="zoom: 200%">Даю</a>
+                    </div>
+                    <div class="beruButton position-absolute bottom-0 end-0 p-3">
+                        <a href="/catalog/man" class="btn btn-danger" style="zoom: 200%">Беру</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="category category-man bg-primary text-white align-middle text-center p-5">
-                    <h2>Товары для мужчин</h2>
-                    <p>Man</p>
-                    <a href="/catalog/man" class="btn btn-light">Shop</a>
-                </div>
+
             </div>
         </div>
+        <!-- Аламын-->
+        <!--Беремiн-->
     </div>
 </section>
 
 <!-- Work Section -->
 <section class="work py-5">
     <div class="container text-center">
-        <h2>Прочие услуги</h2>
-        <div class="row mt-3 mb-2">
-            <!-- Блоки с анимацией при наведении -->
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 1</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 2</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 3</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 5</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 6</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <!-- Блоки с анимацией при наведении -->
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 7</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 8</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 9</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 10</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 11</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="position-relative service-block">
-                    <img src="https://placeholder.pics/svg/100x100" class="img-fluid rounded-circle" alt="Placeholder">
-                    <div class="overlay">
-                        <div class="text">Услуга 12</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?=Html::a('Работа',Url::to('catalog/work'),['class'=>'btn btn-warning']);
+        ;?>
     </div>
 </section>
 
@@ -201,55 +102,3 @@ $this->title = 'My Yii Application';
     </div>
 </section>
 
-<!-- On Sale Section -->
-<section class="on-sale py-5">
-    <div class="container">
-        <h2 class="text-center">Популярные товары</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card border-0">
-
-                    <img src="https://placeholder.pics/svg/200x200" class="card-img-top" alt="Product 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">Цена: $70.00</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0">
-
-                    <img src="https://placeholder.pics/svg/200x200" class="card-img-top" alt="Product 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 2</h5>
-                        <p class="card-text">Цена: $70.00</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0">
-
-                    <img src="https://placeholder.pics/svg/200x200" class="card-img-top" alt="Product 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 3</h5>
-                        <p class="card-text">Цена: $70.00</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0">
-
-                    <img src="https://placeholder.pics/svg/200x200" class="card-img-top" alt="Product 4">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 4</h5>
-                        <p class="card-text">Цена: $70.00</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>

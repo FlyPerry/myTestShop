@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'language'=>'ru-RU',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -62,6 +63,9 @@ $config = [
                 'catalog/women/<id:\d+>' => 'catalog/women',
                 'catalog/product/<id:\d+>' => 'catalog/product',
                 'user/order/update/<id:\d+>' => 'user/orders-update',
+                'user/order/create' => 'user/orders-create',
+                'user/profile/update' => 'user/profile-update',
+
                 // Другие правила маршрутизации
             ],
         ],

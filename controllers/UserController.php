@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Catalog;
 use app\models\CatalogPhoto;
+use app\models\Category;
 use app\models\User;
 use app\models\UserInfo;
 use yii\web\Controller;
@@ -69,8 +70,6 @@ class UserController extends Controller
             , 'tabs' => $this->tabs
             , 'userInfo' => $userInfo
         ]);
-
-
     }
 
     public function actionOrders()
@@ -97,7 +96,7 @@ class UserController extends Controller
         return $this->render('help');
     }
 
-    public function actionUpdate()
+    public function actionProfileUpdate()
     {
         $id = \Yii::$app->user->identity->id;
         $user = User::findOne($id);
@@ -107,16 +106,20 @@ class UserController extends Controller
             throw new \yii\web\NotFoundHttpException('User not found');
         }
 
+        // Сохраняем текущее значение фотографии перед загрузкой формы
+        $currentPhoto = $userInfo->photo;
+
         if (\Yii::$app->request->isPost) {
+            // Загружаем данные в модели
             $user->load(\Yii::$app->request->post());
             $userInfo->load(\Yii::$app->request->post());
 
             // Обработка фото (если загружено новое)
-            $userInfo->photo = UploadedFile::getInstance($userInfo, 'photo');
-            if ($userInfo->photo) {
+            $uploadedPhoto = UploadedFile::getInstance($userInfo, 'photo');
+            if ($uploadedPhoto) {
                 // Определение пути для сохранения фотографии
                 $directoryPath = 'uploads/' . $user->id;
-                $photoPath = $directoryPath . '/' . $user->id . '_profile.' . $userInfo->photo->extension;
+                $photoPath = $directoryPath . '/' . $user->id . '_profile.' . $uploadedPhoto->extension;
 
                 // Проверка существования папки и создание при необходимости
                 if (!is_dir($directoryPath)) {
@@ -124,16 +127,22 @@ class UserController extends Controller
                 }
 
                 // Сохранение фотографии
-                $userInfo->photo->saveAs($photoPath);
-                $userInfo->photo = $photoPath;
+                if ($uploadedPhoto->saveAs($photoPath)) {
+                    // Обновляем только если загрузка успешна
+                    $userInfo->photo = $photoPath;
+                }
+            } else {
+                // Если новое фото не загружено, оставляем старое значение
+                $userInfo->photo = $currentPhoto;
             }
 
+            // Проверка валидации и сохранение моделей
             if ($user->validate() && $userInfo->validate()) {
                 $user->save(false); // сохраняем без повторной валидации
                 $userInfo->save(false);
 
                 \Yii::$app->session->setFlash('success', 'Профиль успешно обновлён');
-                return $this->redirect(['profile']);
+                return $this->redirect(['user/profile']);
             }
         }
 
@@ -205,6 +214,26 @@ class UserController extends Controller
         }
     }
 
+    public function actionOrdersCreate(){
+        $model = new Catalog();
+        $categories = Category ::find()->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // Загружаем файлы изображений
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            $model->user_id = Yii::$app->user->identity->getId();
+
+            // Сохраняем товар и фотографии
+            if ($model->save() && $model->uploadPhotos()) {
+                return $this->redirect(['user/orders']);
+            }
+        } else {
+            // Вывести ошибки валидации для диагностики
+            Yii::error($model->errors);
+        }
+
+        return $this->render('orders/create',['model'=>$model,'categories'=>$categories]);
+    }
     public function actionOrdersUpdate($id)
     {
         // Находим модель по ID

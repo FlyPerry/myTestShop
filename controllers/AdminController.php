@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use app\models\Catalog;
 
 class AdminController extends Controller
 {
@@ -32,7 +33,9 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $catalog =  new Catalog;
+        $strict = $catalog::find()->all();
+        return $this->render('index',['catalog'=>$catalog]);
     }
 
     public function actionView($id)

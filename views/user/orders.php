@@ -11,7 +11,14 @@ use yii\helpers\Url;
 use \yii\helpers\Html;
 ?>
 <div class="tab-pane fade show active" id="catalog-tab">
-    <h2>Мой каталог</h2>
+    <div class="row">
+        <div class="col">
+            <h2>Мой каталог</h2>
+        </div>
+        <div class="col text-end">
+            <?= Html::a('Создать',Url::to('order/create'),['class'=>'btn btn-success'])?>
+        </div>
+    </div>
     <table class="table table-striped table-bordered">
         <thead>
         <tr>

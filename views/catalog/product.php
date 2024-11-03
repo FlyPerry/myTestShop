@@ -22,20 +22,13 @@ use yii\helpers\Html;
             <!-- Carousel -->
             <div id="productCarousel" class="carousel slide">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://placehold.co/500x500" class="d-block w-100"
+                    <?php $i = 0; foreach ($productInfo->getPhotos() as $photo): ?>
+                    <div class="carousel-item <?=$i == 0 ? 'active' : '' ?>">
+                        <img src="<?= Yii::getAlias('@web') . '/' . $photo->photo ?>" class="d-block w-100"
                              alt="Black wireless headphones on a white background" data-bs-toggle="modal"
                              data-bs-target="#productModal">
                     </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/500x500/ff0000/ffffff" class="d-block w-100"
-                             alt="Another view of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/500x500/00ff00/ffffff" class="d-block w-100"
-                             alt="Close-up of the headphones" data-bs-toggle="modal" data-bs-target="#productModal">
-                    </div>
-                    <!-- Add more items as needed -->
+                    <?php $i++; endforeach; unset($i); ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
                         data-bs-slide="prev">
@@ -100,7 +93,7 @@ use yii\helpers\Html;
         </div>
     </div>
     <section class="similar-products mt-5">
-        <h2 class="mb-3">You might also like</h2>
+        <h2 class="mb-3">Вам также может понравиться</h2>
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">

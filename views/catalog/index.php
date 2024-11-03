@@ -11,9 +11,41 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
+<style>
+    .product-count {
+        margin-left: 5px; /* Отступ слева для отделения от имени категории */
+        color: #999; /* Цвет текста счетчика */
+        display: inline-block; /* Обеспечивает возможность применять отступы снизу */
+    }
+
+</style>
 
 <section class="catalog py-5">
+
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <?php
+                $id = Yii::$app->controller->action->id;
+
+                switch ($id) {
+                    case 'man':
+                        $result = 'Даю';
+                        break;
+                    case 'women':
+                        $result = 'Беру';
+                        break;
+                    case 'work':
+                        $result = 'Работа';
+                        break;
+                    default:
+                        $result = ''; // Обработка для других значений
+                }
+                echo '<h3>' . $result . '</h3>';
+                ?>
+
+            </div>
+        </div>
         <div class="row">
             <!-- Sidebar for categories -->
             <div class="col-md-3">
@@ -22,10 +54,11 @@ use yii\helpers\Url;
                     <ul class="category-list">
                         <li><a href="/catalog/<?= $type; ?>">Все категории</a></li>
                         <?php foreach ($categoriesList as $category): ?>
-                            <li>
-                                <?= Html::a($category->name
+                            <li class="d-flex justify-content-between">
+                                <?= Html::a("{$category->name}"
                                     , Url::to('/catalog/' . $category->type . '/' . $category->id))
                                 ?>
+                                <span class="product-count "><?= $category->countProducts; ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -39,7 +72,7 @@ use yii\helpers\Url;
                     <?php foreach ($catalogList as $product): ?>
                         <div class="col-md-3 mb-4">
                             <?php $insideHtml = Html::tag('div',
-                                Html::img('https://via.placeholder.com/200', ['alt' => $product->name, 'class' => 'img-fluid']) .
+                                Html::img('https://placehold.co/200', ['alt' => $product->name, 'class' => 'img-fluid']) .
                                 Html::tag('p', $product->name), ['class' => 'product-item']); ?>
                             <?= Html::a($insideHtml, '/catalog/product/' . $product->id); ?>
                         </div>

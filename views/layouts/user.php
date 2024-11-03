@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\RegisterForm;
 use app\models\LoginForm;
+use app\models\UserInfo;
 
 AppAsset::register($this);
 $registerModel = new RegisterForm();
@@ -46,7 +47,7 @@ $active = Yii::$app->view->params['active'];
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined">
     <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all"
           rel="stylesheet" type="text/css"/>
-    <title>TechSheld</title>
+    <title>Asar Club</title>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js"
@@ -66,7 +67,7 @@ $active = Yii::$app->view->params['active'];
 <?php $cookies = Yii::$app->request->cookies;
 if ($cookies->has('ChangedCity')): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <?= Html::a('TechSheld', ['/'], ['class' => 'navbar-brand']); ?>
+        <?= Html::a('Asar Club', ['/'], ['class' => 'navbar-brand']); ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -218,9 +219,9 @@ if ($cookies->has('ChangedCity')): ?>
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <img src="https://placehold.co/100x100" class="rounded-circle mb-3"
+                        <img src="<?=UserInfo::findOne(Yii::$app->user->identity->id)->getPhoto();?>" class="profile-picture m-auto rounded-circle mb-3"
                              alt="Profile picture of authenticated user with a neutral background">
-                        <h4>AlexPolyakov</h4>
+                        <h4><?=Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname()?></h4>
                         <p><?= Yii::$app->user->identity->getEmail(); ?></p>
                         <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
                     </div>

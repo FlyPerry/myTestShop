@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use app\models\Catalog;
 
 /**
  * This is the model class for table "category".
@@ -49,13 +50,17 @@ class Category extends ActiveRecord
     {
         switch ($this->type) {
             case 'man':
-                return 'Мужчины';
+                return 'Беру';
             case 'women':
-                return 'Женщины';
+                return 'Даю';
             case 'work':
-                return 'Услуги';
+                return 'Работа';
             default:
                 return $this->type; // В других случаях вернуть оригинальное значение
         }
+    }
+
+    public function getCountProducts(){
+        return Catalog::find()->andWhere(['category'=>$this->id,'deleted'=>0])->count();
     }
 }

@@ -48,7 +48,7 @@ class CatalogController extends Controller
 
     public function actionMan($id = NULL)
     {
-        $queryCategories = Category::find()->andWhere(['type' => 'man']);
+        $queryCategories = Category::find()->andWhere(['type' => 'man'])->orderBy('name');
         $categoriesList = $queryCategories->all();
         if (!is_null($id)) {
             $queryCategories->andWhere(['id' => $id]);
@@ -56,13 +56,13 @@ class CatalogController extends Controller
         $categoriesFilter = $queryCategories->all();
         $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
 
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray])->all();
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray,'deleted'=>0])->all();
         return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'man']);
     }
 
     public function actionWomen($id = NULL)
     {
-        $queryCategories = Category::find()->andWhere(['type' => 'women']);
+        $queryCategories = Category::find()->andWhere(['type' => 'women'])->orderBy('name');
         $categoriesList = $queryCategories->all();
         if (!is_null($id)) {
             $queryCategories->andWhere(['id' => $id]);
@@ -70,7 +70,7 @@ class CatalogController extends Controller
         $categoriesFilter = $queryCategories->all();
         $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
 
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray])->all();
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray,'deleted'=>0])->all();
         return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'women']);
     }
 

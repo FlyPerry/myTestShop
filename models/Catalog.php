@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\Url;
-
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "catalog".
  *
@@ -25,7 +25,7 @@ class Catalog extends \yii\db\ActiveRecord
     const VERIFY_REJECT = 0;
     const VERIFY_SUCCESS = 1;
     const VERIFY_PENDING = 2;
-
+    public $imageFiles;
     /**
      * {@inheritdoc}
      */
@@ -40,12 +40,15 @@ class Catalog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'category', 'name', 'date_create', 'date_update'], 'required'],
+            [['user_id', 'category', 'name'], 'required'],
             [['user_id', 'category', 'verify', 'danger'], 'integer'],
             [['deleted'], 'boolean'],
             [['description'], 'string'],
             [['date_create', 'date_update'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10],
+            [['name', 'youtubeLink'], 'string', 'max' => 255], // Добавлено поле youtubeLink
+            [['youtubeLink'], 'url', 'message' => 'Введите корректную ссылку на YouTube'], // Валидация YouTube ссылки
+            [['youtubeLink'], 'validateYoutubeLink'], // Кастомная валидация для YouTube ссылки
         ];
     }
 
@@ -56,16 +59,17 @@ class Catalog extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'category' => 'Category',
-            'name' => 'Name',
-            'description' => 'Description',
-            'deleted' => 'Deleted',
-            'date_create' => 'Date Create',
-            'date_update' => 'Date Update',
-            'verify' => 'Verify',
-            'danger' => 'Danger',
-            'categoryName' => 'Category Name', // Виртуальное поле
+            'user_id' => 'Пользователь',
+            'category' => 'Категория',
+            'name' => 'Название товара',
+            'description' => 'Описание',
+            'deleted' => 'Удалено',
+            'date_create' => 'Дата создания',
+            'date_update' => 'Дата обновления',
+            'verify' => 'Верифицировано',
+            'danger' => 'Требует внимания',
+            'youtubeLink' => 'YouTube Ссылка', // Лейбл для нового поля
+            'categoryName' => 'Название категории', // Виртуальное поле
         ];
     }
 
@@ -138,7 +142,15 @@ class Catalog extends \yii\db\ActiveRecord
         }
         return $paths;
     }
-
+    public function validateYoutubeLink($attribute, $params, $validator)
+    {
+        if (!$this->hasErrors()) {
+            $pattern = '/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/i';
+            if (!preg_match($pattern, $this->$attribute)) {
+                $this->addError($attribute, 'Некорректная ссылка на YouTube.');
+            }
+        }
+    }
     public function getStatusVerify()
     {
         switch ($this->verify) {
@@ -151,5 +163,39 @@ class Catalog extends \yii\db\ActiveRecord
             default:
                 return '';
         }
+    }
+    public function uploadPhotos()
+    {
+        if ($this->validate()) {
+            foreach ($this->imageFiles as $file) {
+                $filePath = 'uploads/catalog/' . $this->id . '/' . $file->baseName . '.' . $file->extension;
+
+                // Создаем директорию, если она не существует
+                if (!is_dir(dirname($filePath))) {
+                    mkdir(dirname($filePath), 0777, true);
+                }
+
+                // Сохраняем файл на сервер
+                if ($file->saveAs($filePath)) {
+                    // Создаем запись в таблице catalogPhoto
+                    $photo = new CatalogPhoto();
+                    $photo->catalogID = $this->id;
+                    $photo->photo = $filePath;
+                    $photo->active = 1;
+                    $photo->verify = 0;
+                    $photo->deleted = 0;
+                    $photo->ext = $file->extension;
+                    $photo->size = $file->size;
+                    $photo->save();
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getYoutubeLink(){
+        return true;
     }
 }

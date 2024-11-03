@@ -41,7 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <title>TechSheld</title>
+    <title>Asar Club</title>
     <link href="/css/site.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
     <?=Html::cssFile('@web/css/'.Yii::$app->controller->id.'.css');?>
@@ -51,7 +51,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $cookies = Yii::$app->request->cookies;
 if ($cookies->has('ChangedCity')): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <?= Html::a('TechSheld', ['/'], ['class' => 'navbar-brand']); ?>
+        <?= Html::a('Asar Club', ['/'], ['class' => 'navbar-brand']); ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
