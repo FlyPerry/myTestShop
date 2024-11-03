@@ -92,14 +92,17 @@ class Catalog extends \yii\db\ActiveRecord
     }
 
     /**
-     * Виртуальное свойство для получения названия категории.
+     **
+     * Виртуальное свойство для получения названия категории в зависимости от языка.
      * @return string|null
      */
     public function getCategoryName()
     {
-        // Используем метод getCategory() для получения объекта категории
         $category = $this->getCategory()->one();
-        return $category ? $category->name : null;
+        if ($category) {
+            return Yii::$app->language === 'kz-KZ' ? $category->namekz : $category->name;
+        }
+        return null;
     }
 
     public function getUrlCategoryTypeBreadcrumb()
@@ -154,11 +157,11 @@ class Catalog extends \yii\db\ActiveRecord
     public function getStatusVerify()
     {
         switch ($this->verify) {
-            case $this::VERIFY_REJECT :
+            case self::VERIFY_REJECT:
                 return '<span class="badge bg-danger">Rejected</span>';
-            case $this::VERIFY_SUCCESS :
+            case self::VERIFY_SUCCESS:
                 return '<span class="badge bg-success">Verified</span>';
-            case $this::VERIFY_PENDING :
+            case self::VERIFY_PENDING:
                 return '<span class="badge bg-warning">Pending</span>';
             default:
                 return '';

@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'language'=>'ru-RU',
+    'language' => strpos($_COOKIE['language'], 'kz-KZ') ? 'kz-KZ' : 'ru-RU', // Устанавливаем язык из куки или по умолчанию русский
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -65,10 +65,22 @@ $config = [
                 'user/order/update/<id:\d+>' => 'user/orders-update',
                 'user/order/create' => 'user/orders-create',
                 'user/profile/update' => 'user/profile-update',
-
+                'site/change-language' => 'site/change-language',
                 // Другие правила маршрутизации
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                'app' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/langs', // Путь к папке с файлами перевода
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],
+                ],
+            ],
+        ],
+        'language' => isset($_COOKIE['language']) ? $_COOKIE['language'] : 'ru-RU', // Устанавливаем язык из куки или по умолчанию русский
     ],
     'params' => $params,
 ];

@@ -30,13 +30,14 @@ use yii\helpers\Url;
 
                 switch ($id) {
                     case 'man':
-                        $result = 'Даю';
+                        $result = Yii::t('app','beru');;
                         break;
                     case 'women':
-                        $result = 'Беру';
+                        $result = Yii::t('app','dayu');;
                         break;
                     case 'work':
-                        $result = 'Работа';
+                        $result = Yii::t('app','work');
+
                         break;
                     default:
                         $result = ''; // Обработка для других значений
@@ -50,12 +51,12 @@ use yii\helpers\Url;
             <!-- Sidebar for categories -->
             <div class="col-md-3">
                 <div class="sidebar">
-                    <h5>Выберите категорию</h5>
+                    <h5><?=Yii::t('app','change-category')?></h5>
                     <ul class="category-list">
-                        <li><a href="/catalog/<?= $type; ?>">Все категории</a></li>
+                        <li><a href="/catalog/<?= $type; ?>"><?=Yii::t('app','all-categories')?></a></li>
                         <?php foreach ($categoriesList as $category): ?>
                             <li class="d-flex justify-content-between">
-                                <?= Html::a("{$category->name}"
+                                <?= Html::a("{$category->getName()}"
                                     , Url::to('/catalog/' . $category->type . '/' . $category->id))
                                 ?>
                                 <span class="product-count "><?= $category->countProducts; ?></span>

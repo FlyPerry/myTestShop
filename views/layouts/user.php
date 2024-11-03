@@ -94,14 +94,19 @@ if ($cookies->has('ChangedCity')): ?>
                         <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                        <li><a class="dropdown-item" href="#">
+                        <li>
+                            <a class="dropdown-item" href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'ru-RU']) ?>">
                                 <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
-                            </a></li>
-                        <li><a class="dropdown-item" href="#">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'kz-KZ']) ?>">
                                 <img src="https://flagcdn.com/16x12/kz.png" alt="Қазақша" class="me-2"> Қазақша
-                            </a></li>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
 
 
                 <?php if (Yii::$app->user->isGuest): ?>
@@ -323,13 +328,13 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
 <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-centered" style="max-width: 80%;">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="locationModalLabel">Select Location</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="locationModalLabel">--><?php //=Yii::t('app', 'select-location')?><!--</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
             <div class="modal-body">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Поиск по городу, району, микрорайону">
+                    <input type="text" class="form-control" placeholder="<?=Yii::t('app', 'find-location-placeholder')?>">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <div class="row">
@@ -365,12 +370,12 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
                     <div class="col-4 d-none" id="neighborhood-container">
                         <select class="form-select" size="10" id="neighborhood-select">
                             <option value="0">Все микрорайоны</option>
-                            Динамически добавляемые микрорайоны
+                            <!--                            Динамически добавляемые микрорайоны-->
                         </select>
                     </div>
                 </div>
                 <div class="mt-3 text-end">
-                    <button class="btn btn-primary changeCityBtn">Выбрать</button>
+                    <button class="btn btn-primary changeCityBtn"><?=Yii::t('app','select')?></button>
                 </div>
             </div>
         </div>

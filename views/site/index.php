@@ -15,10 +15,14 @@ $this->title = 'My Yii Application';
             <div class="col-md-12">
                 <div class="category position-relative category-woman bg-danger text-white align-middle text-center p-5 position-relative">
                     <div class="dayuButton position-absolute top-0 start-0 p-3">
-                        <a href="/catalog/women" class="btn btn-danger" style="zoom: 200%">Даю</a>
+                        <a href="/catalog/women" class="btn btn-danger" style="zoom: 200%">
+                            <?= Yii::t('app', 'dayu') ?>
+                        </a>
                     </div>
                     <div class="beruButton position-absolute bottom-0 end-0 p-3">
-                        <a href="/catalog/man" class="btn btn-danger" style="zoom: 200%">Беру</a>
+                        <a href="/catalog/man" class="btn btn-danger" style="zoom: 200%">
+                            <?= Yii::t('app', 'beru') ?>
+                        </a>
                     </div>
                 </div>
 
@@ -32,8 +36,7 @@ $this->title = 'My Yii Application';
 <!-- Work Section -->
 <section class="work py-5">
     <div class="container text-center">
-        <?=Html::a('Работа',Url::to('catalog/work'),['class'=>'btn btn-warning']);
-        ;?>
+        <?= Html::a(Yii::t('app', 'work'), Url::to('catalog/work'), ['class' => 'btn btn-warning']);; ?>
     </div>
 </section>
 

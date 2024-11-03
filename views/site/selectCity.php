@@ -3,34 +3,42 @@
 <style>
     /* Заглушка для фона Hero-секции */
     .hero-section {
-        background-image: url('https://placeholder.pics/svg/1920x1080');
+        background-image: url('/img/startimage.jpg');
         height: 100vh;
         background-size: cover;
         background-position: center;
     }
+    .transparent-bg {
+        background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+        padding: 20px; /* Добавьте отступы, если необходимо */
+        border-radius: 8px; /* Закругленные углы */
+        width: 50vw;
+    }
+
 </style>
 <section class="hero-section text-center d-flex align-items-center">
-    <div class="container">
-        <h1 class="display-4">Добро пожаловать</h1>
-        <p>Для начала работы с сайтом, выберите ваш город</p>
+    <div class="container transparent-bg">
+        <h1 class="display-4"><?= Yii::t('app', 'welcome') ?></h1>
+        <p><?= Yii::t('app', 'start-text-select-city') ?></p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#locationModal">
-            Выбрать город
+            <?= Yii::t('app', 'change-city-text') ?>
         </button>
     </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-centered" style="max-width: 80%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="locationModalLabel">Select Location</h5>
+                    <h5 class="modal-title" id="locationModalLabel"><?=Yii::t('app', 'select-location')?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Поиск по городу, району, микрорайону">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
+<!--                    <div class="input-group mb-3">-->
+<!--                        <input type="text" class="form-control" placeholder="--><?php //=Yii::t('app', 'find-location-placeholder')?><!--">-->
+<!--                        <span class="input-group-text"><i class="fas fa-search"></i></span>-->
+<!--                    </div>-->
                     <div class="row">
                         <!-- City Selection -->
                         <div class="col-4">
@@ -60,16 +68,16 @@
                                 <!-- Динамически добавляемые районы -->
                             </select>
                         </div>
-<!--                         Neighborhood Selection (initially hidden) -->
+                        <!--                         Neighborhood Selection (initially hidden) -->
                         <div class="col-4 d-none" id="neighborhood-container">
                             <select class="form-select" size="10" id="neighborhood-select">
                                 <option value="0">Все микрорайоны</option>
-                                Динамически добавляемые микрорайоны
+                                <!--                            Динамически добавляемые микрорайоны-->
                             </select>
                         </div>
                     </div>
                     <div class="mt-3 text-end">
-                        <button class="btn btn-primary changeCityBtn">Выбрать</button>
+                        <button class="btn btn-primary changeCityBtn"><?=Yii::t('app','select')?></button>
                     </div>
                 </div>
             </div>

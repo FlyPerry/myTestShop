@@ -11,6 +11,7 @@ use app\models\Catalog;
  *
  * @property int $id
  * @property string $name
+ * @property string $namekz
  * @property string $type
  */
 class Category extends ActiveRecord
@@ -30,7 +31,7 @@ class Category extends ActiveRecord
     {
         return [
             [['name', 'type'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'namekz'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
         ];
     }
@@ -43,24 +44,39 @@ class Category extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Category Name',
+            'namekz' => 'Category Name in Kazakh',
             'type' => 'Category Type',
         ];
     }
+
+    /**
+     * Геттер для динамического выбора имени в зависимости от языка.
+     */
+    public function getName()
+    {
+        // Проверка текущего языка приложения
+        if (Yii::$app->language === 'kz-KZ' && !empty($this->namekz)) {
+            return $this->namekz;
+        }
+        return $this->name;
+    }
+
     public function getTranslatedType()
     {
         switch ($this->type) {
             case 'man':
-                return 'Беру';
+                return Yii::t('app', 'beru');
             case 'women':
-                return 'Даю';
+                return Yii::t('app', 'dayu');
             case 'work':
-                return 'Работа';
+                return Yii::t('app', 'work');
             default:
                 return $this->type; // В других случаях вернуть оригинальное значение
         }
     }
 
-    public function getCountProducts(){
-        return Catalog::find()->andWhere(['category'=>$this->id,'deleted'=>0])->count();
+    public function getCountProducts()
+    {
+        return Catalog::find()->andWhere(['category' => $this->id, 'deleted' => 0])->count();
     }
 }

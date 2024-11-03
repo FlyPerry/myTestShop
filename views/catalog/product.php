@@ -11,7 +11,7 @@ use yii\helpers\Html;
 <div class="container product-main">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><?= Html::a('Главная', '/') ?></li>
+            <li class="breadcrumb-item"><?= Html::a(Yii::t('app','main-page'), '/') ?></li>
             <li class="breadcrumb-item"><?= Html::a($productInfo->getCategory()->one()->getTranslatedType(), $productInfo->getUrlCategoryTypeBreadcrumb()); ?></li>
             <li class="breadcrumb-item"><?= Html::a($productInfo->categoryName, $productInfo->getUrlCategoryBreadcrumb()); ?></li>
             <li class="breadcrumb-item active" aria-current="page"><?= $productInfo->name; ?></li>
@@ -45,8 +45,8 @@ use yii\helpers\Html;
         <div class="col-md-6 product-details">
             <h1><?= $productInfo->name; ?></h1>
             <p><?= $productInfo->description; ?></p>
-            <button class="btn btn-primary w-100" data-bs-target="#sellerInfoModal" data-bs-toggle="modal">Связаться с
-                продавцом
+            <button class="btn btn-primary w-100" data-bs-target="#sellerInfoModal" data-bs-toggle="modal">
+                <?=Yii::t('app','call-seller')?>
             </button>
         </div>
     </div>
@@ -56,7 +56,7 @@ use yii\helpers\Html;
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(0, 0, 0, 0.8);">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel" style="color: white;">Product Image</h5>
+                    <h5 class="modal-title" id="productModalLabel" style="color: white;"><?=Yii::t('app','product-image')?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -71,7 +71,7 @@ use yii\helpers\Html;
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sellerInfoModalLabel">Информация о продавце</h5>
+                    <h5 class="modal-title" id="sellerInfoModalLabel"><?=Yii::t('app','info-seller')?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -79,87 +79,88 @@ use yii\helpers\Html;
                         <div class="col-12">
                             <h4><?= $productInfo->getUser()->one()->getUserInfo()->one()->getFio() ?></h4>
                             <p><?= $productInfo->getUser()->one()->getUserInfo()->one()->bio; ?></p>
-                            <p><strong>email: </strong><?= $productInfo->getUser()->one()->email ?></p>
-                            <p><strong>Телефон для
-                                    связи: </strong><?= $productInfo->getUser()->one()->getUserInfo()->one()->contactPhone; ?>
+                            <p><strong><?=Yii::t('app','email')?>: </strong><?= $productInfo->getUser()->one()->email ?></p>
+                            <p><strong><?=Yii::t('app','phone-call')?>: </strong>
+                                <a href="tel:<?=$productInfo->getUser()->one()->getUserInfo()->one()->contactPhone;?>">
+                                    <?= $productInfo->getUser()->one()->getUserInfo()->one()->contactPhone; ?></a>
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?=Yii::t('app','close')?></button>
                 </div>
             </div>
         </div>
     </div>
-    <section class="similar-products mt-5">
-        <h2 class="mb-3">Вам также может понравиться</h2>
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="https://placehold.co/300x300" class="card-img-top" alt="Black gaming headset">
-                                <div class="card-body">
-                                    <h5 class="card-title">Surround Sound 10.2 Gaming Headset</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="https://placehold.co/300x300" class="card-img-top"
-                                     alt="MX50 wired earbud headphones">
-                                <div class="card-body">
-                                    <h5 class="card-title">MX50 Wired Earbud Headphones</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="https://placehold.co/300x300" class="card-img-top"
-                                     alt="Black in-ear noise cancelling earbuds">
-                                <div class="card-body">
-                                    <h5 class="card-title">In-ear Noise Cancelling & Isolating Wireless Earbuds</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="https://placehold.co/300x300" class="card-img-top"
-                                     alt="Certified Pantronix buds wireless earbuds">
-                                <div class="card-body">
-                                    <h5 class="card-title">Certified Pantronix Buds Wireless Earbud Headphones</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="https://placehold.co/300x300" class="card-img-top"
-                                     alt="Drums pro wireless on-ear headphones">
-                                <div class="card-body">
-                                    <h5 class="card-title">Drums Pro Wireless On-Ear Headphones</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Repeat for each similar product -->
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </a>
-        </div>
-    </section>
+<!--    <section class="similar-products mt-5">-->
+<!--        <h2 class="mb-3">--><?php //=Yii::t('app','may-like')?><!--</h2>-->
+<!--        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">-->
+<!--            <div class="carousel-inner">-->
+<!--                <div class="carousel-item active">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="card">-->
+<!--                                <img src="https://placehold.co/300x300" class="card-img-top" alt="Black gaming headset">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title">Surround Sound 10.2 Gaming Headset</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="card">-->
+<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
+<!--                                     alt="MX50 wired earbud headphones">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title">MX50 Wired Earbud Headphones</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="card">-->
+<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
+<!--                                     alt="Black in-ear noise cancelling earbuds">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title">In-ear Noise Cancelling & Isolating Wireless Earbuds</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="card">-->
+<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
+<!--                                     alt="Certified Pantronix buds wireless earbuds">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title">Certified Pantronix Buds Wireless Earbud Headphones</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="carousel-item">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="card">-->
+<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
+<!--                                     alt="Drums pro wireless on-ear headphones">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title">Drums Pro Wireless On-Ear Headphones</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        Repeat for each similar product -->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">-->
+<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Previous</span>-->
+<!--            </a>-->
+<!--            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">-->
+<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Next</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
 </div>
 <script>
     document.querySelectorAll('#productCarousel .carousel-item img').forEach(img => {

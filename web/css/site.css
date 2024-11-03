@@ -103,3 +103,85 @@ body {
 footer {
     margin-top: auto;
 }
+
+/* Base styles for mobile view */
+@media (max-width: 576px) {
+
+    /* Container adjustments */
+    .container.product-main {
+        padding: 0 15px;
+    }
+
+    /* Breadcrumbs: make them more compact */
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+    }
+
+    /* Carousel Image styling */
+    .carousel-inner img {
+        max-height: 250px; /* limit image height on small screens */
+        object-fit: cover;
+    }
+
+    /* Product Details */
+    .product-details h1 {
+        font-size: 1.5rem;
+    }
+    .product-details p {
+        font-size: 0.9rem;
+    }
+    .product-details .btn {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    /* Carousel Controls */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        height: 20px;
+        width: 20px;
+    }
+
+    /* Fullscreen Modal Image */
+    .modal-content {
+        padding: 10px;
+    }
+    #modalImage {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Seller Info Modal */
+    #sellerInfoModal .modal-content {
+        padding: 15px;
+    }
+    #sellerInfoModal .modal-title {
+        font-size: 1.2rem;
+    }
+    #sellerInfoModal .modal-body p {
+        font-size: 0.9rem;
+    }
+
+    /* Similar Products Carousel */
+    .similar-products h2 {
+        font-size: 1.2rem;
+    }
+
+    /* Adjust card layout in Similar Products */
+    .similar-products .carousel-item .col-md-3 {
+        max-width: 50%; /* 2 items per row */
+    }
+    .similar-products .card img {
+        height: 150px; /* Adjust image height */
+        object-fit: cover;
+    }
+    .similar-products .card-title {
+        font-size: 0.9rem;
+    }
+
+    /* Carousel Control Adjustment */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 10%; /* Reduce button width */
+    }
+}

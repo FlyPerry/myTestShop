@@ -76,6 +76,25 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionChangeLanguage($lang)
+    {
+        // Проверяем, поддерживается ли язык
+        if (in_array($lang, ['ru-RU', 'kz-KZ'])) {
+            Yii::$app->language = $lang;
+
+            // Устанавливаем куки для языка
+            $cookie = new \yii\web\Cookie([
+                'name' => 'language',
+                'value' => $lang,
+                'expire' => time() + 86400 * 30, // Кука на 30 дней
+            ]);
+            Yii::$app->response->cookies->add($cookie);
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
     public function actionSubmitChangedCity()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
