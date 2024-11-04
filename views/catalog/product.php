@@ -8,7 +8,7 @@ use app\models\Catalog;
 use yii\helpers\Html;
 
 ?>
-<div class="container product-main">
+<div class="container product-main mb-5 mb-sm-4 mt-5 mt-sm-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><?= Html::a(Yii::t('app','main-page'), '/') ?></li>
@@ -93,74 +93,6 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
-<!--    <section class="similar-products mt-5">-->
-<!--        <h2 class="mb-3">--><?php //=Yii::t('app','may-like')?><!--</h2>-->
-<!--        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">-->
-<!--            <div class="carousel-inner">-->
-<!--                <div class="carousel-item active">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-3">-->
-<!--                            <div class="card">-->
-<!--                                <img src="https://placehold.co/300x300" class="card-img-top" alt="Black gaming headset">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title">Surround Sound 10.2 Gaming Headset</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-3">-->
-<!--                            <div class="card">-->
-<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
-<!--                                     alt="MX50 wired earbud headphones">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title">MX50 Wired Earbud Headphones</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-3">-->
-<!--                            <div class="card">-->
-<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
-<!--                                     alt="Black in-ear noise cancelling earbuds">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title">In-ear Noise Cancelling & Isolating Wireless Earbuds</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-3">-->
-<!--                            <div class="card">-->
-<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
-<!--                                     alt="Certified Pantronix buds wireless earbuds">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title">Certified Pantronix Buds Wireless Earbud Headphones</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="carousel-item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-3">-->
-<!--                            <div class="card">-->
-<!--                                <img src="https://placehold.co/300x300" class="card-img-top"-->
-<!--                                     alt="Drums pro wireless on-ear headphones">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title">Drums Pro Wireless On-Ear Headphones</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        Repeat for each similar product -->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">-->
-<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                <span class="visually-hidden">Previous</span>-->
-<!--            </a>-->
-<!--            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">-->
-<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                <span class="visually-hidden">Next</span>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </section>-->
 </div>
 <script>
     document.querySelectorAll('#productCarousel .carousel-item img').forEach(img => {

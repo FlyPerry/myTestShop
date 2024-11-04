@@ -177,7 +177,6 @@ if ($cookies->has('ChangedCity')): ?>
 
                             <div class="mb-3 text-end">
                                 <?= Html::submitButton(Yii::t('app', 'reg'), ['class' => 'btn btn-primary']) ?>
-                                <?= Html::button(Yii::t('app', 'close'), ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
                             </div>
 
                             <?php ActiveForm::end(); ?>
@@ -200,7 +199,6 @@ if ($cookies->has('ChangedCity')): ?>
 
                             <div class="mb-3 text-end">
                                 <?= Html::submitButton(Yii::t('app', 'enter'), ['class' => 'btn btn-primary']) ?>
-                                <?= Html::button(Yii::t('app', 'close'), ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
                             </div>
 
                             <?php ActiveForm::end(); ?>
@@ -287,22 +285,17 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     </footer>
 <?php endif; ?>
 <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-centered" style="max-width: 80%;">
+    <div class="modal-dialog modal-centered" style="max-width: 80vw; justify-self: center;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="locationModalLabel"><?= Yii::t('app', 'select-location') ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!--                <div class="input-group mb-3">-->
-                <!--                    <input type="text" class="form-control" placeholder="-->
-                <?php //=Yii::t('app', 'find-location-placeholder')?><!--">-->
-                <!--                    <span class="input-group-text"><i class="fas fa-search"></i></span>-->
-                <!--                </div>-->
                 <div class="row">
                     <!-- City Selection -->
-                    <div class="col-4">
-                        <select class="form-select" size="10" id="city-select">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
+                        <select class="form-select" id="city-select" size="6">
                             <option value="0">Весь Казахстан</option>
                             <option value="1">Алматинская область</option>
                             <option value="2">Акмолинская область</option>
@@ -322,22 +315,22 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
                         </select>
                     </div>
                     <!-- District Selection (initially hidden) -->
-                    <div class="col-4 d-none" id="district-container">
-                        <select class="form-select" size="10" id="district-select">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0 d-none" id="district-container">
+                        <select class="form-select" id="district-select" size="6">
                             <option value="0">Все районы</option>
                             <!-- Динамически добавляемые районы -->
                         </select>
                     </div>
-                    <!--                         Neighborhood Selection (initially hidden) -->
-                    <div class="col-4 d-none" id="neighborhood-container">
-                        <select class="form-select" size="10" id="neighborhood-select">
+                    <!-- Neighborhood Selection (initially hidden) -->
+                    <div class="col-12 col-md-4 d-none" id="neighborhood-container">
+                        <select class="form-select" id="neighborhood-select" size="6">
                             <option value="0">Все микрорайоны</option>
-                            <!--                            Динамически добавляемые микрорайоны-->
+                            <!-- Динамически добавляемые микрорайоны -->
                         </select>
                     </div>
                 </div>
                 <div class="mt-3 text-end">
-                    <button class="btn btn-primary changeCityBtn"><?= Yii::t('app', 'select') ?></button>
+                    <button class="btn btn-primary w-100 w-md-auto changeCityBtn"><?= Yii::t('app', 'select') ?></button>
                 </div>
             </div>
         </div>

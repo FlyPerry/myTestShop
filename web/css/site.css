@@ -185,3 +185,115 @@ footer {
         width: 10%; /* Reduce button width */
     }
 }
+@media (max-width: 768px) {
+    #locationModal .modal-dialog {
+        width: 95vw;
+        max-width: 95vw;
+    }
+    #locationModal .modal-content {
+        padding: 1rem;
+    }
+    #locationModal select {
+        font-size: 1rem;
+        max-height: 200px; /* Limits dropdown height for better usability */
+    }
+    .changeCityBtn {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+}
+@media (max-width: 576px) {
+    #authUserInfoModal .modal-dialog {
+        max-width: 95%;
+        margin: 0 auto;
+    }
+
+    #authUserInfoModal .modal-header {
+        padding: 0.5rem 1rem;
+    }
+
+    #authUserInfoModal .modal-title {
+        font-size: 1.2rem;
+    }
+
+    #authUserInfoModal .btn-close {
+        font-size: 1.2rem;
+    }
+
+    #authUserInfoModal .modal-body {
+        padding: 1rem;
+    }
+
+    #authUserInfoModal .modal-body img {
+        width: 80px;
+        height: 80px;
+    }
+
+    #authUserInfoModal .modal-body h4 {
+        font-size: 1.2rem;
+    }
+
+    #authUserInfoModal .modal-body p {
+        font-size: 0.9rem;
+    }
+
+    #authUserInfoModal .modal-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    #authUserInfoModal .modal-footer .btn {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 576px) {
+    #authModal .modal-dialog {
+        max-width: 90% !important;
+        margin: 0 auto;
+    }
+
+    #authModal .modal-header {
+        padding: 0.5rem 1rem;
+    }
+
+    #authModal .modal-title {
+        font-size: 1.1rem;
+    }
+
+    #authModal .btn-close {
+        font-size: 1rem;
+    }
+
+    #authModal .nav-tabs .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    #authModal .tab-content .form-control {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    #authModal .modal-body {
+        padding: 1rem;
+    }
+
+    #authModal .tab-pane {
+        padding-top: 1rem;
+    }
+
+    #authModal .modal-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    #authModal .btn {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+}
