@@ -54,6 +54,7 @@ $active = Yii::$app->view->params['active'];
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/piexif.min.js"
             type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/sortable.min.js"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
@@ -95,18 +96,19 @@ if ($cookies->has('ChangedCity')): ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                         <li>
-                            <a class="dropdown-item" href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'ru-RU']) ?>">
+                            <a class="dropdown-item"
+                               href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'ru-RU']) ?>">
                                 <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'kz-KZ']) ?>">
+                            <a class="dropdown-item"
+                               href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'kz-KZ']) ?>">
                                 <img src="https://flagcdn.com/16x12/kz.png" alt="Қазақша" class="me-2"> Қазақша
                             </a>
                         </li>
                     </ul>
                 </li>
-
 
 
                 <?php if (Yii::$app->user->isGuest): ?>
@@ -218,9 +220,10 @@ if ($cookies->has('ChangedCity')): ?>
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <img src="<?=UserInfo::findOne(Yii::$app->user->identity->id)->getPhoto();?>" class="profile-picture m-auto rounded-circle mb-3"
+                        <img src="<?= UserInfo::findOne(Yii::$app->user->identity->id)->getPhoto(); ?>"
+                             class="profile-picture m-auto rounded-circle mb-3"
                              alt="Profile picture of authenticated user with a neutral background">
-                        <h4><?=Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname()?></h4>
+                        <h4><?= Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname() ?></h4>
                         <p><?= Yii::$app->user->identity->getEmail(); ?></p>
                         <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
                     </div>
@@ -245,96 +248,89 @@ if ($cookies->has('ChangedCity')): ?>
 
 <?php endif; ?>
 
-
 <main id="main" class="flex-shrink-0" role="main">
     <?php if (!empty($this->params['breadcrumbs'])): ?>
         <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
     <?php endif ?>
     <?= Alert::widget() ?>
+
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-lg-2 sidebar">
-                <h4>Личный кабинет</h4>
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a href="/user/dashboard"
-                           class="nav-link <?= isset($active['dashboard']) ? $active['dashboard'] : '' ?>">
-                            <i class="fa-solid fa-table-list"></i> Инф. Панель
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/user/profile"
-                           class="nav-link <?= isset($active['profile']) ? $active['profile'] : '' ?>"><i
-                                    class="fa-regular fa-id-badge"></i>
-                            Мой профиль</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/user/orders"
-                           class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?> "><i
-                                    class="fa-solid fa-bars-staggered"></i>
-                            Мои товары</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
-                                    class="fas fa-envelope"></i>
-                            Сообщения</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/user/help" class="nav-link <?= isset($active['help']) ? $active['help'] : '' ?>"><i
-                                    class="fas fa-question-circle"></i>
-                            Помощь</a>
-                    </li>
-                    <li class="nav-item">
-                        <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> Выйти', '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
-
-                    </li>
-
-                </ul>
+            <!-- Кнопка для открытия бокового меню на мобильных устройствах -->
+            <div class="d-md-none col-12 text-end mb-3">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                        aria-controls="sidebarMenu">
+                    <i class="fas fa-bars"></i> Меню
+                </button>
             </div>
+
+            <!-- Боковое меню: Offcanvas на мобильных устройствах, фиксированное на ПК -->
+            <div class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" id="sidebarMenu" tabindex="-1"
+                 aria-labelledby="sidebarMenuLabel">
+                <div class="offcanvas-header d-md-none"> <!-- Заголовок и кнопка закрытия только на мобильных -->
+                    <h5 class="offcanvas-title text-white" id="sidebarMenuLabel">Личный кабинет</h5>
+                    <button type="button" class="btn-close bg-white btn-close-white" id="canvasClose"
+                            data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a href="/user/dashboard"
+                               class="nav-link <?= isset($active['dashboard']) ? $active['dashboard'] : '' ?>">
+                                <i class="fa-solid fa-table-list"></i> Инф. Панель
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/profile"
+                               class="nav-link <?= isset($active['profile']) ? $active['profile'] : '' ?>"><i
+                                        class="fa-regular fa-id-badge"></i> Мой профиль</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/orders"
+                               class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?>"><i
+                                        class="fa-solid fa-bars-staggered"></i> Мои товары</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
+                                        class="fas fa-envelope"></i> Сообщения</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/help"
+                               class="nav-link <?= isset($active['help']) ? $active['help'] : '' ?>"><i
+                                        class="fas fa-question-circle"></i> Помощь</a>
+                        </li>
+                        <li class="nav-item">
+                            <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> Выйти', '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Основной контент -->
             <div class="col-md-9 col-lg-10 content tab-content">
                 <?= $content ?>
             </div>
         </div>
     </div>
-
 </main>
+
+
 <?php
 if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Store Location</h5>
-                    <p>Address: 123 City</p>
-                    <p>Phone: 7777777777</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Shop</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Computers</a></li>
-                        <li><a href="#" class="text-white">Tablets</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Customer Support</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?= $this->render('footer.php'); ?>
 <?php endif; ?>
 <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-centered" style="max-width: 80%;">
         <div class="modal-content">
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="locationModalLabel">--><?php //=Yii::t('app', 'select-location')?><!--</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
+            <!--            <div class="modal-header">-->
+            <!--                <h5 class="modal-title" id="locationModalLabel">-->
+            <?php //=Yii::t('app', 'select-location')?><!--</h5>-->
+            <!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            <!--            </div>-->
             <div class="modal-body">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="<?=Yii::t('app', 'find-location-placeholder')?>">
+                    <input type="text" class="form-control"
+                           placeholder="<?= Yii::t('app', 'find-location-placeholder') ?>">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <div class="row">
@@ -375,7 +371,7 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
                     </div>
                 </div>
                 <div class="mt-3 text-end">
-                    <button class="btn btn-primary changeCityBtn"><?=Yii::t('app','select')?></button>
+                    <button class="btn btn-primary changeCityBtn"><?= Yii::t('app', 'select') ?></button>
                 </div>
             </div>
         </div>
@@ -391,239 +387,244 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     })
 </script>
 <script>
+
     // Данные районов и микрорайонов по областям
     const data = {
         "1": { // Алматинская область
             districts: [
-                { id: "1", name: "Алатауский район"     },
-                { id: "2", name: "Алмалинский район"    },
-                { id: "3", name: "Ауэзовский район"     },
-                { id: "4", name: "Бостандыкский район"  },
-                { id: "5", name: "Жетысуский район"     },
-                { id: "6", name: "Медеуский район"      },
-                { id: "7", name: "Наурызбайский район"  },
-                { id: "8", name: "Турксибский район"    },
-                { id: "8", name: "Талдыкорган"    },
-                { id: "8", name: "Капшагай"    },
-                { id: "8", name: "Текели"    },
+                {id: "1", name: "Алатауский район"},
+                {id: "2", name: "Алмалинский район"},
+                {id: "3", name: "Ауэзовский район"},
+                {id: "4", name: "Бостандыкский район"},
+                {id: "5", name: "Жетысуский район"},
+                {id: "6", name: "Медеуский район"},
+                {id: "7", name: "Наурызбайский район"},
+                {id: "8", name: "Турксибский район"},
+                {id: "8", name: "Талдыкорган"},
+                {id: "8", name: "Капшагай"},
+                {id: "8", name: "Текели"},
             ]
         },
         "2": { // Акмолинская область
             districts: [
-                { id: "1", name: "Аккольский район"},
-                { id: "2", name: "Аршалынский район"   },
-                { id: "3", name: "Астраханский район"   },
-                { id: "4", name: "Атбасарский район"   },
-                { id: "5", name: "Буландынский район"   },
-                { id: "6", name: "Бурабайский район"   },
-                { id: "7", name: "Егиндыкольский район"   },
-                { id: "8", name: "Ерейментауский район"   },
-                { id: "9", name: "Есильский район"   },
-                { id: "10", name: "Жаксынский район"   },
-                { id: "11", name: "Коргалжынский район"   },
-                { id: "12", name: "Сандыктауский район"   },
-                { id: "13", name: "Целиноградский район"   },
-                { id: "14", name: "Шортандинский район"   },
-                { id: "15", name: "Кокшетау"   },
-                { id: "16", name: "Степногорск"   },
+                {id: "1", name: "Аккольский район"},
+                {id: "2", name: "Аршалынский район"},
+                {id: "3", name: "Астраханский район"},
+                {id: "4", name: "Атбасарский район"},
+                {id: "5", name: "Буландынский район"},
+                {id: "6", name: "Бурабайский район"},
+                {id: "7", name: "Егиндыкольский район"},
+                {id: "8", name: "Ерейментауский район"},
+                {id: "9", name: "Есильский район"},
+                {id: "10", name: "Жаксынский район"},
+                {id: "11", name: "Коргалжынский район"},
+                {id: "12", name: "Сандыктауский район"},
+                {id: "13", name: "Целиноградский район"},
+                {id: "14", name: "Шортандинский район"},
+                {id: "15", name: "Кокшетау"},
+                {id: "16", name: "Степногорск"},
             ]
         },
         "3": { // Актюбинская область
             districts: [
-                { id: "1", name: "Айтекебийский район"},
-                { id: "2", name: "Алгинский район"   },
-                { id: "3", name: "Байганинский район"   },
-                { id: "4", name: "Иргизский район"   },
-                { id: "5", name: "Каргалинский район"   },
-                { id: "6", name: "Кобдинский район"   },
-                { id: "7", name: "Мартукский район"   },
-                { id: "8", name: "Мугалжарский район"   },
-                { id: "9", name: "Темирский район"   },
-                { id: "10", name: "Уилский район"   },
-                { id: "11", name: "Хромтауский район"   },
-                { id: "12", name: "Сандыктауский район"   },
-                { id: "13", name: "Целиноградский район"   },
-                { id: "14", name: "Шортандинский район"   },
-                { id: "15", name: "Актобе"   },
-                { id: "16", name: "Кандыагаш"   },
+                {id: "1", name: "Айтекебийский район"},
+                {id: "2", name: "Алгинский район"},
+                {id: "3", name: "Байганинский район"},
+                {id: "4", name: "Иргизский район"},
+                {id: "5", name: "Каргалинский район"},
+                {id: "6", name: "Кобдинский район"},
+                {id: "7", name: "Мартукский район"},
+                {id: "8", name: "Мугалжарский район"},
+                {id: "9", name: "Темирский район"},
+                {id: "10", name: "Уилский район"},
+                {id: "11", name: "Хромтауский район"},
+                {id: "12", name: "Сандыктауский район"},
+                {id: "13", name: "Целиноградский район"},
+                {id: "14", name: "Шортандинский район"},
+                {id: "15", name: "Актобе"},
+                {id: "16", name: "Кандыагаш"},
             ]
         },
         "4": { // Атырауская область
             districts: [
-                { id: "1", name: "Индерский район"},
-                { id: "2", name: "Исатайский район"   },
-                { id: "3", name: "Курмангазинский район"   },
-                { id: "4", name: "Макатский район"   },
-                { id: "5", name: "Махамбетский район"   },
-                { id: "6", name: "Атырау"   },
-                { id: "7", name: "Кульсары"   },
+                {id: "1", name: "Индерский район"},
+                {id: "2", name: "Исатайский район"},
+                {id: "3", name: "Курмангазинский район"},
+                {id: "4", name: "Макатский район"},
+                {id: "5", name: "Махамбетский район"},
+                {id: "6", name: "Атырау"},
+                {id: "7", name: "Кульсары"},
             ]
         },
         "5": { // Восточно-Казахстанская область
             districts: [
-                { id: "1", name: "Абайский район"},
-                { id: "2", name: "Аягозский район"   },
-                { id: "3", name: "Бескарагайский район"   },
-                { id: "4", name: "Бородулихинский район"   },
-                { id: "5", name: "Глубоковский район"   },
-                { id: "6", name: "Жарминский район"   },
-                { id: "7", name: "Зайсанский район"   },
-                { id: "8", name: "Зыряновский район"   },
-                { id: "9", name: "Катон-Карагайский район"   },
-                { id: "10", name: "Кокпектинский район"   },
-                { id: "11", name: "Тарбагатайский район"   },
-                { id: "12", name: "Уланский район"   },
-                { id: "13", name: "Усть-Каменогорск"   },
-                { id: "14", name: "Семей"   },
-                { id: "15", name: "Риддер"   },
+                {id: "1", name: "Абайский район"},
+                {id: "2", name: "Аягозский район"},
+                {id: "3", name: "Бескарагайский район"},
+                {id: "4", name: "Бородулихинский район"},
+                {id: "5", name: "Глубоковский район"},
+                {id: "6", name: "Жарминский район"},
+                {id: "7", name: "Зайсанский район"},
+                {id: "8", name: "Зыряновский район"},
+                {id: "9", name: "Катон-Карагайский район"},
+                {id: "10", name: "Кокпектинский район"},
+                {id: "11", name: "Тарбагатайский район"},
+                {id: "12", name: "Уланский район"},
+                {id: "13", name: "Усть-Каменогорск"},
+                {id: "14", name: "Семей"},
+                {id: "15", name: "Риддер"},
             ]
         },
         "6": { // Жамбылская область
             districts: [
-                { id: "1", name: "Байзакский район"},
-                { id: "2", name: "Жамбылский район"   },
-                { id: "3", name: "Жуалынский район"   },
-                { id: "4", name: "Кордайский район"   },
-                { id: "5", name: "Меркенский район"   },
-                { id: "6", name: "Мойынкумский район"   },
-                { id: "7", name: "Рыскуловский район"   },
-                { id: "8", name: "Сарысуский район"   },
-                { id: "9", name: "Таласский район"   },
-                { id: "10", name: "Тараз "   },
-                { id: "11", name: "Жанатас"   },
-                { id: "12", name: "Каратау"   },
+                {id: "1", name: "Байзакский район"},
+                {id: "2", name: "Жамбылский район"},
+                {id: "3", name: "Жуалынский район"},
+                {id: "4", name: "Кордайский район"},
+                {id: "5", name: "Меркенский район"},
+                {id: "6", name: "Мойынкумский район"},
+                {id: "7", name: "Рыскуловский район"},
+                {id: "8", name: "Сарысуский район"},
+                {id: "9", name: "Таласский район"},
+                {id: "10", name: "Тараз "},
+                {id: "11", name: "Жанатас"},
+                {id: "12", name: "Каратау"},
             ]
         },
         "7": { // Западно-Казахстанская область
             districts: [
-                { id: "1", name: "Акжаикский район"},
-                { id: "2", name: "Бокейординский район"   },
-                { id: "3", name: "Жангалинский район"   },
-                { id: "4", name: "Каратобинский район"   },
-                { id: "5", name: "Сырымский район"   },
-                { id: "6", name: "Таскалинский район"   },
-                { id: "7", name: "Теректинский район"   },
-                { id: "8", name: "Шынгырлауский район"   },
-                { id: "9", name: "Уральск"   },
-                { id: "10", name: "Аксай"   },
+                {id: "1", name: "Акжаикский район"},
+                {id: "2", name: "Бокейординский район"},
+                {id: "3", name: "Жангалинский район"},
+                {id: "4", name: "Каратобинский район"},
+                {id: "5", name: "Сырымский район"},
+                {id: "6", name: "Таскалинский район"},
+                {id: "7", name: "Теректинский район"},
+                {id: "8", name: "Шынгырлауский район"},
+                {id: "9", name: "Уральск"},
+                {id: "10", name: "Аксай"},
             ]
         },
         "8": { // Карагандинская область
             districts: [
-                { id: "1", name: "Абайский район"},
-                { id: "2", name: "Актогайский район"   },
-                { id: "3", name: "Бухар-Жырауский район"   },
-                { id: "4", name: "Каркаралинский район"   },
-                { id: "5", name: "Нуринский район"   },
-                { id: "6", name: "Осакаровский район"   },
-                { id: "7", name: "Улытауский район"   },
-                { id: "8", name: "Караганда"   },
-                { id: "9", name: "Темиртау"   },
-                { id: "10", name: "Балхаш"   },
-                { id: "11", name: "Жезказган"   },
-                { id: "12", name: "Сатпаев"   },
+                {id: "1", name: "Абайский район"},
+                {id: "2", name: "Актогайский район"},
+                {id: "3", name: "Бухар-Жырауский район"},
+                {id: "4", name: "Каркаралинский район"},
+                {id: "5", name: "Нуринский район"},
+                {id: "6", name: "Осакаровский район"},
+                {id: "7", name: "Улытауский район"},
+                {id: "8", name: "Караганда"},
+                {id: "9", name: "Темиртау"},
+                {id: "10", name: "Балхаш"},
+                {id: "11", name: "Жезказган"},
+                {id: "12", name: "Сатпаев"},
             ]
         },
         "9": { // Костанайская область
             districts: [
-                { id: "1", name: "Алтынсаринский район"},
-                { id: "2", name: "Аулиекольский район"   },
-                { id: "3", name: "Денисовский район"   },
-                { id: "4", name: "Житикаринский район"   },
-                { id: "5", name: "Карабалыкский район"   },
-                { id: "6", name: "Карасуский район"   },
-                { id: "7", name: "Костанайский район"   },
-                { id: "8", name: "Мендыкаринский район"   },
-                { id: "9", name: "Наурзумский район"   },
-                { id: "10", name: "Сарыкольский район"   },
-                { id: "11", name: "Тарановский район"   },
-                { id: "12", name: "Узункольский район"   },
-                { id: "13", name: "Костанай "   },
-                { id: "14", name: "Рудный"   },
-                { id: "15", name: "Лисаковск"   },
+                {id: "1", name: "Алтынсаринский район"},
+                {id: "2", name: "Аулиекольский район"},
+                {id: "3", name: "Денисовский район"},
+                {id: "4", name: "Житикаринский район"},
+                {id: "5", name: "Карабалыкский район"},
+                {id: "6", name: "Карасуский район"},
+                {id: "7", name: "Костанайский район"},
+                {id: "8", name: "Мендыкаринский район"},
+                {id: "9", name: "Наурзумский район"},
+                {id: "10", name: "Сарыкольский район"},
+                {id: "11", name: "Тарановский район"},
+                {id: "12", name: "Узункольский район"},
+                {id: "13", name: "Костанай "},
+                {id: "14", name: "Рудный"},
+                {id: "15", name: "Лисаковск"},
             ]
         },
         "10": { // Кызылординская область
             districts: [
-                { id: "1", name: "Аральский район"},
-                { id: "2", name: "Жалагашский район"   },
-                { id: "3", name: "Казалинский район"   },
-                { id: "4", name: "Кармакшинский район"   },
-                { id: "5", name: "Сырдарьинский район"   },
-                { id: "6", name: "Шиелийский район"   },
-                { id: "7", name: "Жанакорганский район"   },
-                { id: "8", name: "Кызылорда"   },
+                {id: "1", name: "Аральский район"},
+                {id: "2", name: "Жалагашский район"},
+                {id: "3", name: "Казалинский район"},
+                {id: "4", name: "Кармакшинский район"},
+                {id: "5", name: "Сырдарьинский район"},
+                {id: "6", name: "Шиелийский район"},
+                {id: "7", name: "Жанакорганский район"},
+                {id: "8", name: "Кызылорда"},
             ]
         },
         "11": { // Мангистауская область
             districts: [
-                { id: "1", name: "Бейнеуский район"},
-                { id: "2", name: "Каракиянский район"   },
-                { id: "3", name: "Мангыстауский район"   },
-                { id: "4", name: "Мунайлынский район"   },
-                { id: "5", name: "Тупкараганский район"   },
-                { id: "6", name: "Актау"   },
-                { id: "7", name: "Жанаозен"   },
+                {id: "1", name: "Бейнеуский район"},
+                {id: "2", name: "Каракиянский район"},
+                {id: "3", name: "Мангыстауский район"},
+                {id: "4", name: "Мунайлынский район"},
+                {id: "5", name: "Тупкараганский район"},
+                {id: "6", name: "Актау"},
+                {id: "7", name: "Жанаозен"},
             ]
         },
         "12": { // Павлодарская область
             districts: [
-                { id: "1", name: "Алтынсаринский район"},
-                { id: "2", name: "Баянаульский район"   },
-                { id: "3", name: "Железинский район"   },
-                { id: "4", name: "Иртышский район"   },
-                { id: "5", name: "Качирский район"   },
-                { id: "6", name: "Павлодарский район"   },
-                { id: "7", name: "Успенский район"   },
-                { id: "8", name: "Павлодар"   },
-                { id: "9", name: "Экибастуз"   },
-                { id: "10", name: "Аксу"   },
+                {id: "1", name: "Алтынсаринский район"},
+                {id: "2", name: "Баянаульский район"},
+                {id: "3", name: "Железинский район"},
+                {id: "4", name: "Иртышский район"},
+                {id: "5", name: "Качирский район"},
+                {id: "6", name: "Павлодарский район"},
+                {id: "7", name: "Успенский район"},
+                {id: "8", name: "Павлодар"},
+                {id: "9", name: "Экибастуз"},
+                {id: "10", name: "Аксу"},
             ]
         },
         "13": { // Северо-Казахстанская область
             districts: [
-                { id: "1", name: "Акжарский район"},
-                { id: "2", name: "Айыртауский район"   },
-                { id: "3", name: "Аккайынский район"   },
-                { id: "4", name: "Есильский район"   },
-                { id: "5", name: "Жамбылский район"   },
-                { id: "6", name: "Кызылжарский район"   },
-                { id: "7", name: "Мамлютский район"   },
-                { id: "8", name: "Тайыншинский район"   },
-                { id: "9", name: "Тимирязевский район"   },
-                { id: "10", name: "Уалихановский район"   },
-                { id: "11", name: "Петропавловск"   },
+                {id: "1", name: "Акжарский район"},
+                {id: "2", name: "Айыртауский район"},
+                {id: "3", name: "Аккайынский район"},
+                {id: "4", name: "Есильский район"},
+                {id: "5", name: "Жамбылский район"},
+                {id: "6", name: "Кызылжарский район"},
+                {id: "7", name: "Мамлютский район"},
+                {id: "8", name: "Тайыншинский район"},
+                {id: "9", name: "Тимирязевский район"},
+                {id: "10", name: "Уалихановский район"},
+                {id: "11", name: "Петропавловск"},
             ]
         },
         "14": { // Туркестанская область
             districts: [
-                { id: "1", name: "Байдибекский район"},
-                { id: "2", name: "Жетысайский район"   },
-                { id: "3", name: "Казыгуртский район"   },
-                { id: "4", name: "Махтааральский район"   },
-                { id: "5", name: "Отырарский район"   },
-                { id: "6", name: "Сарыагашский район"   },
-                { id: "7", name: "Сайрамский район"   },
-                { id: "8", name: "Тюлькубасский район"   },
-                { id: "9", name: "Туркестан"   },
-                { id: "10", name: "Кентау"   },
-                { id: "11", name: "Арысь"   },
+                {id: "1", name: "Байдибекский район"},
+                {id: "2", name: "Жетысайский район"},
+                {id: "3", name: "Казыгуртский район"},
+                {id: "4", name: "Махтааральский район"},
+                {id: "5", name: "Отырарский район"},
+                {id: "6", name: "Сарыагашский район"},
+                {id: "7", name: "Сайрамский район"},
+                {id: "8", name: "Тюлькубасский район"},
+                {id: "9", name: "Туркестан"},
+                {id: "10", name: "Кентау"},
+                {id: "11", name: "Арысь"},
             ]
         },
         "15": { // Жетысуская область
             districts: [
-                { id: "1", name: "Аксуский район"},
-                { id: "2", name: "Алакольский район"   },
-                { id: "3", name: "Каратальский район"   },
-                { id: "4", name: "Кегенский район"   },
-                { id: "5", name: "Коксуйский район"   },
-                { id: "6", name: "Панфиловский район"   },
-                { id: "7", name: "Талдыкорган "   },
+                {id: "1", name: "Аксуский район"},
+                {id: "2", name: "Алакольский район"},
+                {id: "3", name: "Каратальский район"},
+                {id: "4", name: "Кегенский район"},
+                {id: "5", name: "Коксуйский район"},
+                {id: "6", name: "Панфиловский район"},
+                {id: "7", name: "Талдыкорган "},
             ]
         },
     };
 
     $(document).ready(function () {
+        let sidebarOffcanvas = new bootstrap.Offcanvas(document.getElementById('sidebarMenu'));
+        $('#canvasClose').on('click', function () {
+            sidebarOffcanvas.hide();
+        });
         // При изменении выбора области
         $('#city-select').on('change', function () {
             const cityId = $(this).val();

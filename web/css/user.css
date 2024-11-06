@@ -54,4 +54,9 @@ body {
     display: block; /* Избегаем лишнего отступа снизу */
     max-width: 100%; /* Делаем изображение адаптивным */
 }
-
+@media (max-width: 576px) {
+    .content {
+        margin-left: 0 !important; /* Смещение контента вправо, чтобы не налезало на сайдбар */
+        padding: 0px !important;
+    }
+}

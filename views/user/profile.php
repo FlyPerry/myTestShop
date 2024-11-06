@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
  */
 ?>
 
-<div class="tab-pane fade show active" id="users-tab">
+<div class="tab-pane fade show active mb-3" id="users-tab">
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
