@@ -22,9 +22,9 @@ use yii\web\UploadedFile;
  */
 class Catalog extends \yii\db\ActiveRecord
 {
-    const VERIFY_REJECT = 0;
-    const VERIFY_SUCCESS = 1;
-    const VERIFY_PENDING = 2;
+    const VERIFY_REJECT = 0; //отклонённые
+    const VERIFY_SUCCESS = 1; // подтверждённые
+    const VERIFY_PENDING = 2; // на модерации
     public $imageFiles;
     /**
      * {@inheritdoc}
@@ -158,11 +158,11 @@ class Catalog extends \yii\db\ActiveRecord
     {
         switch ($this->verify) {
             case self::VERIFY_REJECT:
-                return '<span class="badge bg-danger">Rejected</span>';
+                return '<span class="badge bg-danger">'.Yii::t('app','rejected').'</span>';
             case self::VERIFY_SUCCESS:
-                return '<span class="badge bg-success">Verified</span>';
+                return '<span class="badge bg-success">'.Yii::t('app','verified').'</span>';
             case self::VERIFY_PENDING:
-                return '<span class="badge bg-warning">Pending</span>';
+                return '<span class="badge bg-warning">'.Yii::t('app','pending').'</span>';
             default:
                 return '';
         }

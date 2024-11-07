@@ -11,6 +11,24 @@ use app\models\Catalog;
 
 class AdminController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            // Check user role and redirect if needed
+            if (Yii::$app->user->isGuest || Yii::$app->user->identity->getRole() != 1) {
+                Yii::$app->response->redirect(['site/index']);
+                return false;
+            }
+            $this->layout = 'admin'; // Установка макета
+
+            // Установка массива для доступа в макете
+            Yii::$app->view->params['active'] = ['catalog' => 0, 'moderate' => 0, 'statistics' => 0];
+
+            return true;
+        }
+        return false;
+    }
+
     public function behaviors()
     {
         return [
@@ -33,11 +51,56 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
-        $catalog =  new Catalog;
-        $strict = $catalog::find()->all();
-        return $this->render('index',['catalog'=>$catalog]);
+        return $this->redirect(['admin/moderate']);
     }
 
+    public function actionModerate()
+    {
+        $itemsForModerate = Catalog::find()->andWhere(['deleted' => false, 'verify' => Catalog::VERIFY_PENDING])->all();
+        return $this->render('moderate', ['itemsForModerate' => $itemsForModerate]);
+    }
+
+    public function actionModerateCancel($id)
+    {
+        // Ищем товар по id
+        $product = Catalog::findOne($id);
+
+        if ($product === null) {
+            throw new NotFoundHttpException("Товар не найден.");
+        }
+
+        // Отменяем статус модерации (например, статус "ожидает модерации")
+        $product->verify = Catalog::VERIFY_REJECT;  // VERIFY_REJECT - статус для товаров, которые ещё не подтверждены
+        if ($product->save()) {
+            Yii::$app->session->setFlash('success', 'Модерация отменена.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Ошибка при отмене модерации.');
+        }
+
+        // Перенаправляем на страницу модерации
+        return $this->redirect(['admin/moderate']);
+    }
+
+    public function actionModerateAccept($id)
+    {
+        // Ищем товар по id
+        $product = Catalog::findOne($id);
+
+        if ($product === null) {
+            throw new NotFoundHttpException("Товар не найден.");
+        }
+
+        // Отменяем статус модерации (например, статус "ожидает модерации")
+        $product->verify = Catalog::VERIFY_SUCCESS;  // VERIFY_REJECT - статус для товаров, которые ещё не подтверждены
+        if ($product->save()) {
+            Yii::$app->session->setFlash('success', 'Модерация отменена.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Ошибка при отмене модерации.');
+        }
+
+        // Перенаправляем на страницу модерации
+        return $this->redirect(['admin/moderate']);
+    }
     public function actionView($id)
     {
         // Implement the view action
@@ -71,16 +134,5 @@ class AdminController extends Controller
         // throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function beforeAction($action)
-    {
-        if (parent::beforeAction($action)) {
-            // Check user role and redirect if needed
-            if (Yii::$app->user->isGuest || Yii::$app->user->identity->getRole() != 1) {
-                Yii::$app->response->redirect(['site/index']);
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
+
 }

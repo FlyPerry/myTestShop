@@ -40,6 +40,15 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
 }
+.text-truncate{
+    max-width: 150px;
+}
+.text-truncate span {
+    width: 150px; /* Ограничиваем ширину ячейки */
+    text-overflow: ellipsis; /* Показываем многоточие */
+    white-space: nowrap; /* Запрещаем перенос текста */
+    cursor: pointer;
+}
 
 
 

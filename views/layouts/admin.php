@@ -31,7 +31,7 @@ $active = Yii::$app->view->params['active'];
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,165 +92,33 @@ if ($cookies->has('ChangedCity')): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php if (Yii::$app->language === 'ru-RU'): ?>
-                            <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
-                        <?php elseif (Yii::$app->language === 'kz-KZ'): ?>
-                            <img src="https://flagcdn.com/16x12/kz.png" alt="Қазақша" class="me-2"> Қазақша
-                        <?php endif; ?>
+                        <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                         <li>
-                            <a class="dropdown-item <?= Yii::$app->language === 'ru-RU' ? 'active' : '' ?>"
+                            <a class="dropdown-item"
                                href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'ru-RU']) ?>">
                                 <img src="https://flagcdn.com/16x12/ru.png" alt="Русский" class="me-2"> Русский
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item <?= Yii::$app->language === 'kz-KZ' ? 'active' : '' ?>"
+                            <a class="dropdown-item"
                                href="<?= \yii\helpers\Url::to(['site/change-language', 'lang' => 'kz-KZ']) ?>">
                                 <img src="https://flagcdn.com/16x12/kz.png" alt="Қазақша" class="me-2"> Қазақша
                             </a>
                         </li>
                     </ul>
                 </li>
-
-
-                <?php if (Yii::$app->user->isGuest): ?>
-                    <!-- Login/Register Button with User Icon -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">
-                            <i class="fa fa-user" aria-hidden="true"></i> Вход / Регистрация
-                        </a>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authUserInfoModal">
-                            <i class="fa fa-user" aria-hidden="true"></i> <?= Yii::$app->user->identity->getEmail() ?>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authUserInfoModal">
+                        <i class="fa fa-user" aria-hidden="true"></i> <?= Yii::$app->user->identity->getEmail() ?>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
 <?php endif; ?>
 
-<?php if (Yii::$app->user->isGuest): ?>
-
-    <!-- Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-centered" style="max-width: 30vw;">
-            <div class="modal-content">
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title" id="authModalLabel">Регистрация / Вход</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" id="authTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="register-tab" data-bs-toggle="tab" href="#register"
-                               role="tab"
-                               aria-controls="register" aria-selected="true">Регистрация</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="login-tab" data-bs-toggle="tab" href="#login" role="tab"
-                               aria-controls="login" aria-selected="false">Авторизация</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active mt-3" id="register" role="tabpanel"
-                             aria-labelledby="register-tab">
-                            <?php $form = ActiveForm::begin([
-                                'id' => 'registerForm',
-                                'action' => ['site/register'],
-                                'options' => ['class' => 'form'],
-                            ]); ?>
-
-                            <div class="mb-3">
-                                <?= $form->field($registerModel, 'email')->textInput(['type' => 'email', 'class' => 'form-control'])->label('Эл.Почта') ?>
-                            </div>
-                            <div class="mb-3">
-                                <?= $form->field($registerModel, 'password')->passwordInput(['class' => 'form-control'])->label('Пароль') ?>
-                            </div>
-                            <div class="mb-3">
-                                <?= $form->field($registerModel, 'confirmPassword')->passwordInput(['class' => 'form-control'])->label('Подтвердите пароль') ?>
-                            </div>
-
-                            <div class="mb-3 text-end">
-                                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-primary']) ?>
-                                <?= Html::button('Закрыть', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
-                            </div>
-
-                            <?php ActiveForm::end(); ?>
-                        </div>
-                        <div class="tab-pane fade mt-3" id="login" role="tabpanel" aria-labelledby="login-tab">
-                            <?php $form = ActiveForm::begin([
-                                'id' => 'loginForm',
-                                'action' => ['site/login'],
-                                'options' => ['class' => 'form'],
-                            ]); ?>
-
-                            <div class="mb-3">
-                                <?= $form->field($loginModel, 'email')->textInput(['type' => 'email', 'class' => 'form-control'])->label('Эл.Почта') ?>
-                            </div>
-                            <div class="mb-3">
-                                <?= $form->field($loginModel, 'password')->passwordInput(['class' => 'form-control'])->label('Пароль') ?>
-                            </div>
-
-                            <div class="mb-3 text-end">
-                                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary']) ?>
-                                <?= Html::button('Закрыть', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']) ?>
-                            </div>
-
-                            <?php ActiveForm::end(); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php else: ?>
-
-    <!-- Modal -->
-    <div class="modal fade" id="authUserInfoModal" tabindex="-1" aria-labelledby="authUserInfoModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="authUserInfoModalLabel">Информация о пользователе</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <img src="<?= UserInfo::findOne(Yii::$app->user->identity->id)->getPhoto(); ?>"
-                             class="profile-picture m-auto rounded-circle mb-3"
-                             alt="Profile picture of authenticated user with a neutral background">
-                        <h4><?= Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname() ?></h4>
-                        <p><?= Yii::$app->user->identity->getEmail(); ?></p>
-                        <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
-                    </div>
-                    <hr>
-                    <h5>Дополнительная информация</h5>
-                    <ul class="list-unstyled">
-                        <li><strong>Зарегестрирован:</strong> 15 Июля , 2024 г.</li>
-                        <li><strong>Последняя авторизация:</strong> 25 Июля, 2024 г.</li>
-                        <li><strong>Роль:</strong> ADMIN</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <?php if (Yii::$app->user->identity->getRole() == 1)
-                        echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
-                    ?>
-                    <?= Html::a('Личный кабинет', '/user/dashboard', ['class' => 'btn btn-primary']) ?>
-                    <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<?php endif; ?>
 
 <main id="main" class="flex-shrink-0" role="main">
     <?php if (!empty($this->params['breadcrumbs'])): ?>
@@ -272,36 +140,27 @@ if ($cookies->has('ChangedCity')): ?>
             <div class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" id="sidebarMenu" tabindex="-1"
                  aria-labelledby="sidebarMenuLabel">
                 <div class="offcanvas-header d-md-none"> <!-- Заголовок и кнопка закрытия только на мобильных -->
-                    <h5 class="offcanvas-title text-white" id="sidebarMenuLabel">Личный кабинет</h5>
+                    <h5 class="offcanvas-title text-white" id="sidebarMenuLabel">Админ Панель</h5>
                     <button type="button" class="btn-close bg-white btn-close-white" id="canvasClose"
                             data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a href="/user/dashboard"
-                               class="nav-link <?= isset($active['dashboard']) ? $active['dashboard'] : '' ?>">
-                                <i class="fa-solid fa-table-list"></i> Инф. Панель
+                            <a href="/admin/catalog"
+                               class="nav-link <?= isset($active['catalog']) ? $active['catalog'] : '' ?>">
+                                <i class="fa-solid fa-table-list"></i> Весь каталог
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/user/profile"
-                               class="nav-link <?= isset($active['profile']) ? $active['profile'] : '' ?>"><i
-                                        class="fa-regular fa-id-badge"></i> Мой профиль</a>
+                            <a href="/admin/moderate"
+                               class="nav-link <?= isset($active['moderate']) ? $active['moderate'] : '' ?>"><i
+                                        class="fa fa-gavel"></i> Модерация</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/user/orders"
-                               class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?>"><i
-                                        class="fa-solid fa-bars-staggered"></i> Мои товары</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
-                                        class="fas fa-envelope"></i> Сообщения</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/user/help"
-                               class="nav-link <?= isset($active['help']) ? $active['help'] : '' ?>"><i
-                                        class="fas fa-question-circle"></i> Помощь</a>
+                            <a href="/admin/statistics"
+                               class="nav-link <?= isset($active['statistics']) ? $active['statistics'] : '' ?>"><i
+                                        class="fa-solid fa-bars-staggered"></i> Статистика</a>
                         </li>
                         <li class="nav-item">
                             <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> Выйти', '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
@@ -681,6 +540,42 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
         });
     });
 </script>
+<!-- Modal -->
+<div class="modal fade" id="authUserInfoModal" tabindex="-1" aria-labelledby="authUserInfoModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authUserInfoModalLabel">Информация о пользователе</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="<?= UserInfo::findOne(Yii::$app->user->identity->id)->getPhoto(); ?>"
+                         class="profile-picture m-auto rounded-circle mb-3"
+                         alt="Profile picture of authenticated user with a neutral background">
+                    <h4><?= Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname() ?></h4>
+                    <p><?= Yii::$app->user->identity->getEmail(); ?></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
+                </div>
+                <hr>
+                <h5>Дополнительная информация</h5>
+                <ul class="list-unstyled">
+                    <li><strong>Зарегестрирован:</strong> 15 Июля , 2024 г.</li>
+                    <li><strong>Последняя авторизация:</strong> 25 Июля, 2024 г.</li>
+                    <li><strong>Роль:</strong> ADMIN</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <?php if (Yii::$app->user->identity->getRole() == 1)
+                    echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
+                ?>
+                <?= Html::a('Личный кабинет', '/user/dashboard', ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 
