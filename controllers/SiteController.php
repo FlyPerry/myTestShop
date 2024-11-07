@@ -151,7 +151,7 @@ class SiteController extends Controller
         $model = new RegisterForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
-            return $this->redirect(['site/index']);
+            return $this->redirect(['user/profile']);
         }
 
         return $this->render('index');

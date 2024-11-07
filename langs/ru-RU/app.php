@@ -40,5 +40,6 @@ return [
     'verified'=>'Подтверждено',
     'rejected'=>'Отклонено',
     'pending'=>'Проверяется',
+    'welcomePersonelCabinet'=>'для продолжения нажмите кнопку "Меню"',
 
 ];

@@ -25,6 +25,7 @@ class UserController extends Controller
             // Установка массива для доступа в макете
             Yii::$app->view->params['active'] = ['dashboard' => 0, 'profile' => 0, 'orders' => 0, 'sms' => 0, 'help' => 0];
 
+
             return true; // Позволяет выполнить действие
         }
 
@@ -214,9 +215,10 @@ class UserController extends Controller
         }
     }
 
-    public function actionOrdersCreate(){
+    public function actionOrdersCreate()
+    {
         $model = new Catalog();
-        $categories = Category ::find()->all();
+        $categories = Category::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Загружаем файлы изображений
@@ -232,12 +234,14 @@ class UserController extends Controller
             Yii::error($model->errors);
         }
 
-        return $this->render('orders/create',['model'=>$model,'categories'=>$categories]);
+        return $this->render('orders/create', ['model' => $model, 'categories' => $categories]);
     }
+
     public function actionOrdersUpdate($id)
     {
         // Находим модель по ID
         $model = Catalog::findOne($id);
+        $categories = Category::find()->all();
 
         // Проверяем, существует ли модель
         if (!$model) {
@@ -268,13 +272,16 @@ class UserController extends Controller
                     $catalogPhoto->save();
                 }
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['orders']);
             }
         }
 
-        return $this->render('orders/update', [
-            'model' => $model,
-        ]);
+        if ($model->user_id === Yii::$app->user->id){
+            return $this->render('orders/update', [
+                'model' => $model, 'categories' => $categories,
+            ]);
+        }
+        return $this->redirect(['orders']);
     }
 }
 

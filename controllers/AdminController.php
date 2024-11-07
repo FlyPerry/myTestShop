@@ -59,6 +59,11 @@ class AdminController extends Controller
         $itemsForModerate = Catalog::find()->andWhere(['deleted' => false, 'verify' => Catalog::VERIFY_PENDING])->all();
         return $this->render('moderate', ['itemsForModerate' => $itemsForModerate]);
     }
+    public function actionCatalog()
+    {
+        $itemsForModerate = Catalog::find()->all();
+        return $this->render('catalog', ['itemsForModerate' => $itemsForModerate]);
+    }
 
     public function actionModerateCancel($id)
     {

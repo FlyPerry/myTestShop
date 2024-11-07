@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Catalog */
@@ -20,7 +21,10 @@ $this->title = 'Обновить: ' . $model->name;
             <div class="col-4">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-                <?= $form->field($model, 'category')->dropDownList(['0' => 'cat1']) ?>
+                <?= $form->field($model, 'category')->dropDownList(
+                    ArrayHelper::map($categories, 'id', 'name'), // Изначально все категории
+                    ['prompt' => 'Выберите категорию', 'id' => 'category-dropdown', 'disabled' => true] // ID для JS
+                )->label('Категория') ?>
             </div>
             <div class="col-8">
 

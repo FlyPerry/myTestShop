@@ -227,21 +227,13 @@ if ($cookies->has('ChangedCity')): ?>
                         <h4>....</h4>
                         <p><?= Yii::$app->user->identity->getEmail(); ?></p>
                         <!--Место нахождения-->
-                        <p><i class="fas fa-map-marker-alt"></i> ....</p>
                     </div>
-                    <hr>
-                    <h5><?= Yii::t('app', 'ext-info') ?></h5>
-                    <ul class="list-unstyled">
-                        <li><strong><?= Yii::t('app', 'was-reg') ?>:</strong> 15 Июля, 2024 г.</li>
-                        <li><strong><?= Yii::t('app', 'last-auth') ?>:</strong> 25 Июля, 2024 г.</li>
-                        <li><strong><?= Yii::t('app', 'role') ?>:</strong> ADMIN</li>
-                    </ul>
                 </div>
                 <div class="modal-footer">
                     <?php if (Yii::$app->user->identity->getRole() == 1)
                         echo Html::a(Yii::t('app', 'admin-panel'), '/admin', ['class' => 'btn btn-info']);
                     ?>
-                    <?= Html::a(Yii::t('app', 'personal-cabinet'), '/user/dashboard', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('app', 'personal-cabinet'), '/user/profile', ['class' => 'btn btn-primary']) ?>
                     <?= Html::a(Yii::t('app', 'exit'), '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
                 </div>
             </div>

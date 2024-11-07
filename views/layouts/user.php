@@ -220,7 +220,7 @@ if ($cookies->has('ChangedCity')): ?>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="authUserInfoModalLabel">Информация о пользователе</h5>
+                    <h5 class="modal-title" id="authUserInfoModalLabel"><?= Yii::t('app', 'info-about-user') ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -230,21 +230,14 @@ if ($cookies->has('ChangedCity')): ?>
                              alt="Profile picture of authenticated user with a neutral background">
                         <h4><?= Yii::$app->user->identity->getLastname() . ' ' . Yii::$app->user->identity->getFirstname() ?></h4>
                         <p><?= Yii::$app->user->identity->getEmail(); ?></p>
-                        <p><i class="fas fa-map-marker-alt"></i> Казахстан, Павлодар</p>
                     </div>
                     <hr>
-                    <h5>Дополнительная информация</h5>
-                    <ul class="list-unstyled">
-                        <li><strong>Зарегестрирован:</strong> 15 Июля , 2024 г.</li>
-                        <li><strong>Последняя авторизация:</strong> 25 Июля, 2024 г.</li>
-                        <li><strong>Роль:</strong> ADMIN</li>
-                    </ul>
                 </div>
                 <div class="modal-footer">
                     <?php if (Yii::$app->user->identity->getRole() == 1)
                         echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
                     ?>
-                    <?= Html::a('Личный кабинет', '/user/dashboard', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Личный кабинет', '/user/profile', ['class' => 'btn btn-primary']) ?>
                     <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
                 </div>
             </div>
@@ -293,7 +286,7 @@ if ($cookies->has('ChangedCity')): ?>
                         <li class="nav-item">
                             <a href="/user/orders"
                                class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?>"><i
-                                        class="fa-solid fa-bars-staggered"></i> Мои товары</a>
+                                        class="fa-solid fa-bars-staggered"></i> Подать объявление</a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
@@ -626,7 +619,7 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     };
 
     $(document).ready(function () {
-        $('#cityName').text(data[<?=$cookies->getValue('ChangedCity')?>]['districts'][<?=$cookies->getValue('ChangedDistrict')?>-1]['name']);
+        $('#cityName').text(data[<?=$cookies->getValue('ChangedCity')?>]['districts'][<?=$cookies->getValue('ChangedDistrict')?> - 1]['name']);
 
         let sidebarOffcanvas = new bootstrap.Offcanvas(document.getElementById('sidebarMenu'));
         $('#canvasClose').on('click', function () {

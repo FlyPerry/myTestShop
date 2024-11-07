@@ -30,6 +30,12 @@ class RegisterForm extends Model
         $user->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
         $user->auth_key = \Yii::$app->security->generateRandomString();
 
+        if ($user->save()) {
+            // Авторизация после сохранения пользователя
+            \Yii::$app->user->login($user);
+            return true;
+        }
+
         return $user->save();
     }
 }

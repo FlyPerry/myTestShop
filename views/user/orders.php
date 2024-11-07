@@ -50,17 +50,20 @@ use \yii\helpers\Html;
                     <td>
                         <!-- Группа кнопок с иконками -->
                         <div class="btn-group" role="group" aria-label="Product Actions">
-                            <a href="/user/order/view/<?= $product->id; ?>" class="btn btn-primary btn-sm">
-                                <i class="fas fa-eye"></i>
-                            </a>
+                            <!--                            <a href="/user/order/view/-->
+                            <?php //= $product->id; ?><!--" class="btn btn-primary btn-sm">-->
+                            <!--                                <i class="fas fa-eye"></i>-->
+                            <!--                            </a>-->
                             <a href="/user/order/update/<?= $product->id; ?>" class="btn btn-info btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <button type="button" class="btn btn-<?= !$product->deleted ? 'danger' : 'success' ?> btn-sm toggle-status-btn"
-                                    data-id="<?= $product->id; ?>"
-                                    data-status="<?= $product->deleted; ?>">
-                                <i class="fas fa-<?= !$product->deleted ? 'toggle-off' : 'toggle-on' ?>"></i>
-                            </button>
+                            <?= Html::a('<i class="fa fa-trash"></i>', ['/user/order/delete/' . $product->id], [
+                                'class' => 'btn btn-danger btn-sm',
+                                'data' => [
+                                    'confirm' => 'Вы уверены, что хотите удалить этот заказ?',
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
                             <a href="<?= $product->getFinishUrl() ?>" class="btn btn-success btn-sm" target="_blank">
                                 <i class="fas fa-check"></i>
                             </a>

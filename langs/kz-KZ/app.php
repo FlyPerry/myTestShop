@@ -40,5 +40,6 @@ return [
     'verified' => 'Тексерілген',
     'rejected' => 'Қабылданбады',
     'pending' => 'Тексерілуде',
+    'welcomePersonelCabinet'=>'жалғастыру үшін «Мәзір» түймесін басыңыз',
 
 ];
