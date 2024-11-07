@@ -56,8 +56,8 @@ class CatalogController extends Controller
         $categoriesFilter = $queryCategories->all();
         $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
 
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray,'deleted'=>0])->all();
-        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'man']);
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
+        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'man']);
     }
 
     public function actionWomen($id = NULL)
@@ -70,13 +70,26 @@ class CatalogController extends Controller
         $categoriesFilter = $queryCategories->all();
         $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
 
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray,'deleted'=>0])->all();
-        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList,'type'=>'women']);
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
+        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'women']);
+    }
+    public function actionWork($id = NULL)
+    {
+        $queryCategories = Category::find()->andWhere(['type' => 'work'])->orderBy('name');
+        $categoriesList = $queryCategories->all();
+        if (!is_null($id)) {
+            $queryCategories->andWhere(['id' => $id]);
+        }
+        $categoriesFilter = $queryCategories->all();
+        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
+
+        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
+        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'work']);
     }
 
     public function actionProduct($id)
     {
         $productInfo = Catalog::findOne($id);
-        return $this->render('product',['productInfo'=>$productInfo]);
+        return $this->render('product', ['productInfo' => $productInfo]);
     }
 }

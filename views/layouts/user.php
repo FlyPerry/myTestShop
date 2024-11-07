@@ -16,6 +16,7 @@ use app\models\RegisterForm;
 use app\models\LoginForm;
 use app\models\UserInfo;
 
+
 AppAsset::register($this);
 $registerModel = new RegisterForm();
 $loginModel = new LoginForm();
@@ -625,6 +626,8 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     };
 
     $(document).ready(function () {
+        $('#cityName').text(data[<?=$cookies->getValue('ChangedCity')?>]['districts'][<?=$cookies->getValue('ChangedDistrict')?>-1]['name']);
+
         let sidebarOffcanvas = new bootstrap.Offcanvas(document.getElementById('sidebarMenu'));
         $('#canvasClose').on('click', function () {
             sidebarOffcanvas.hide();

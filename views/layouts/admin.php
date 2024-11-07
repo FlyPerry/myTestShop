@@ -84,7 +84,7 @@ if ($cookies->has('ChangedCity')): ?>
                 <!-- Dropdown for City Selection -->
                 <li class="nav-item">
                     <button class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#locationModal">
-                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName">Павлодар</span>
+                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName"></span>
                     </button>
                 </li>
 
@@ -484,6 +484,7 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     };
 
     $(document).ready(function () {
+        $('#cityName').text(data[<?=$cookies->getValue('ChangedCity')?>]['districts'][<?=$cookies->getValue('ChangedDistrict')?>-1]['name']);
         let sidebarOffcanvas = new bootstrap.Offcanvas(document.getElementById('sidebarMenu'));
         $('#canvasClose').on('click', function () {
             sidebarOffcanvas.hide();

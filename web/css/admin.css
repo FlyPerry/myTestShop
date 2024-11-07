@@ -49,6 +49,11 @@ body {
     white-space: nowrap; /* Запрещаем перенос текста */
     cursor: pointer;
 }
-
+@media (max-width: 576px) {
+    .content {
+        margin-left: 0 !important; /* Смещение контента вправо, чтобы не налезало на сайдбар */
+        padding: 0px !important;
+    }
+}
 
 

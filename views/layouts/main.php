@@ -75,7 +75,7 @@ if ($cookies->has('ChangedCity')): ?>
                 <!-- Dropdown for City Selection -->
                 <li class="nav-item">
                     <button class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#locationModal">
-                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName">Павлодар</span>
+                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName">Нас. Пункт</span>
                     </button>
                 </li>
 
@@ -557,6 +557,7 @@ if ($cookies->has('ChangedCity') && (Yii::$app->controller->id !== 'admin')): ?>
     };
 
     $(document).ready(function () {
+        $('#cityName').text(data[<?=$cookies->getValue('ChangedCity')?>]['districts'][<?=$cookies->getValue('ChangedDistrict')?>-1]['name']);
         // При изменении выбора области
         $('#city-select').on('change', function () {
             const cityId = $(this).val();

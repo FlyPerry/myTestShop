@@ -77,6 +77,6 @@ class Category extends ActiveRecord
 
     public function getCountProducts()
     {
-        return Catalog::find()->andWhere(['category' => $this->id, 'deleted' => 0])->count();
+        return Catalog::find()->andWhere(['category' => $this->id, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->count();
     }
 }
