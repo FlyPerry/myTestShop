@@ -28,6 +28,7 @@ use yii\helpers\Url;
             <tr>
                 <th>Наименование</th>
                 <th>Описание</th>
+                <th>Категория</th>
                 <th>Фото</th>
                 <th>Дата создания</th>
                 <th>Подтверждено</th>
@@ -41,7 +42,7 @@ use yii\helpers\Url;
                     <td class="text-truncate toggle-text">
                         <span><?= $product->description; ?></span>
                     </td>
-
+                    <td><?= $product->categoryName; ?></td>
                     <td>
                         <?php foreach ($product->getPhotos() as $photo): ?>
                             <?= Html::img('/' . Url::to($photo->photo) ?? 'https://placehold.co/100x100',

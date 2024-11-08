@@ -7,6 +7,7 @@ use app\models\CatalogPhoto;
 use app\models\Category;
 use app\models\User;
 use app\models\UserInfo;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -187,32 +188,44 @@ class UserController extends Controller
         return $this->render('upload', ['model' => $model]);
     }
 
-    public function actionChangeActiveOrder()
+    /**
+     * @throws StaleObjectException
+     * @throws \Throwable
+     * @throws NotFoundHttpException
+     */
+    public function actionOrdersDelete($id)
     {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
+        // Найти запись по указанному ID
+        $model = Catalog::findOne($id);
 
-        $id = \Yii::$app->request->post('id');
-        $product = Catalog::findOne($id);
-
-        if ($product === null) {
-            throw new NotFoundHttpException('Продукт не найден.');
+        // Проверка существования модели и совпадения пользователя
+        if ($model === null || $model->user_id !== Yii::$app->user->id) {
+            throw new \yii\web\NotFoundHttpException("Запись с ID {$id} не найдена или доступ к ней запрещен.");
         }
 
-        // Меняем статус активности
-        $product->deleted = !$product->deleted;
 
-        // Сохраняем и возвращаем результат
-        if ($product->save()) {
-            return [
-                'success' => true,
-                'deleted' => $product->deleted
-            ];
-        } else {
-            return [
-                'success' => false,
-                'errors' => $product->errors
-            ];
+        // Попытка удалить модель
+        try {
+            $model->delete();
+        } catch (StaleObjectException|\Throwable $e) {
+            throw new \yii\web\NotFoundHttpException($e->getMessage());
         }
+        // Удаление папки, если она существует
+        $directory = Yii::getAlias('@app/web/uploads/catalog/' . $model->id);
+        if (is_dir($directory)) {
+            // Удаление папки и всех её содержимого
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($files as $fileinfo) {
+                $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                $todo($fileinfo->getRealPath());
+            }
+            rmdir($directory); // Удаляем саму папку
+        }
+        // Перенаправление после удаления
+        return $this->redirect(['user/orders']);
     }
 
     public function actionOrdersCreate()
@@ -223,7 +236,7 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Загружаем файлы изображений
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            $model->user_id = Yii::$app->user->identity->getId();
+            $model->user_id = Yii::$app->user->id;
 
             // Сохраняем товар и фотографии
             if ($model->save() && $model->uploadPhotos()) {
@@ -241,7 +254,7 @@ class UserController extends Controller
     {
         // Находим модель по ID
         $model = Catalog::findOne($id);
-        $categories = Category::find()->all();
+        $categories = Category::find()->andWhere(['type'=>$model->getCategory()->one()->type])->all();
 
         // Проверяем, существует ли модель
         if (!$model) {
@@ -249,34 +262,33 @@ class UserController extends Controller
         }
 
         // Если форма отправлена
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Обработка загруженных фотографий
             $model->date_update = date('Y-m-d H:i:s'); // Обновляем дату изменения
-
-            if ($model->save()) {
-                // Загрузка и сохранение фотографий, если они были выбраны
-                $photos = UploadedFile::getInstancesByName('photos'); // Имя должно совпадать с именем в форме
-
-                foreach ($photos as $photo) {
-                    $catalogPhoto = new CatalogPhoto();
-                    $catalogPhoto->catalogID = $model->id;
-                    $catalogPhoto->photo = $photo->baseName . '.' . $photo->extension;
-                    $catalogPhoto->ext = $photo->extension;
-                    $catalogPhoto->size = $photo->size;
-
-                    // Путь для сохранения
-                    $path = 'uploads/user/' . $model->user_id . '/' . $model->id . '/' . $catalogPhoto->photo;
-                    $photo->saveAs($path);
-
-                    // Сохраняем информацию о фотографии
-                    $catalogPhoto->save();
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            $model->user_id = Yii::$app->user->id;
+            $model->verify = Catalog::VERIFY_PENDING;
+            CatalogPhoto::deleteAll(['catalogID' => $model->id]);
+            $directory = Yii::getAlias('@app/web/uploads/catalog/' . $model->id);
+            if (is_dir($directory)) {
+                // Удаление папки и всех её содержимого
+                $files = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+                    \RecursiveIteratorIterator::CHILD_FIRST
+                );
+                foreach ($files as $fileinfo) {
+                    $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                    $todo($fileinfo->getRealPath());
                 }
-
-                return $this->redirect(['orders']);
+                rmdir($directory); // Удаляем саму папку
+            }
+            if ($model->save() && $model->uploadPhotos()) {
+                // Загрузка и сохранение фотографий, если они были выбраны
+                return $this->redirect(['user/orders']);
             }
         }
 
-        if ($model->user_id === Yii::$app->user->id){
+        if ($model->user_id === Yii::$app->user->id) {
             return $this->render('orders/update', [
                 'model' => $model, 'categories' => $categories,
             ]);

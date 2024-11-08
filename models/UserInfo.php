@@ -20,7 +20,7 @@ class UserInfo extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'lastname', 'firstname'], 'required'],
+            [['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['bio'], 'string'],
             [['lastname', 'firstname', 'contactPhone', 'photo', 'city'], 'string', 'max' => 255],

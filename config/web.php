@@ -63,6 +63,7 @@ $config = [
                 'catalog/women/<id:\d+>' => 'catalog/women',
                 'catalog/product/<id:\d+>' => 'catalog/product',
                 'user/order/update/<id:\d+>' => 'user/orders-update',
+                'user/order/delete/<id:\d+>' => 'user/orders-delete',
                 'user/order/create' => 'user/orders-create',
                 'user/profile/update' => 'user/profile-update',
                 'site/change-language' => 'site/change-language',

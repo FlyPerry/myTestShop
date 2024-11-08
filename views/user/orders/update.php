@@ -23,13 +23,11 @@ $this->title = 'Обновить: ' . $model->name;
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
                 <?= $form->field($model, 'category')->dropDownList(
                     ArrayHelper::map($categories, 'id', 'name'), // Изначально все категории
-                    ['prompt' => 'Выберите категорию', 'id' => 'category-dropdown', 'disabled' => true] // ID для JS
+                    ['prompt' => 'Выберите категорию', 'id' => 'category-dropdown'] // ID для JS
                 )->label('Категория') ?>
             </div>
             <div class="col-8">
-
-                <?= $form->field($model, 'photos[]')->fileInput(['multiple' => true]) ?>
-
+                <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'id' => 'image-input'])->label('Фотографии товара') ?>
             </div>
         </div>
         <!-- Поле для загрузки фотографий -->

@@ -96,7 +96,7 @@ class AdminController extends Controller
         }
 
         // Отменяем статус модерации (например, статус "ожидает модерации")
-        $product->verify = Catalog::VERIFY_SUCCESS;  // VERIFY_REJECT - статус для товаров, которые ещё не подтверждены
+        $product->verify = Catalog::VERIFY_SUCCESS;  // VERIFY_SUCCESS - статус для товаров, которые ещё не подтверждены
         if ($product->save()) {
             Yii::$app->session->setFlash('success', 'Модерация отменена.');
         } else {

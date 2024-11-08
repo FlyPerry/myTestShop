@@ -28,6 +28,7 @@ use yii\helpers\Url;
             <tr>
                 <th>Наименование</th>
                 <th>Описание</th>
+                <th>Категория</th>
                 <th>Фото</th>
                 <th>Дата создания</th>
                 <th>Подтверждено</th>
@@ -41,6 +42,7 @@ use yii\helpers\Url;
                     <td class="text-truncate toggle-text">
                         <span><?= $product->description; ?></span>
                     </td>
+                    <td><?= $product->categoryName; ?></td>
 
                     <td>
                         <?php foreach ($product->getPhotos() as $photo): ?>
@@ -48,7 +50,7 @@ use yii\helpers\Url;
                                 ['alt' => "Фото товара", 'class' => 'img-thumbnail', 'style' => 'width: 80px; height: auto;']); ?>
                         <?php endforeach; ?>
                     </td>
-                    <td><?= Yii::$app->formatter->asDatetime($product->date_create, 'dd.MM.Y H:i') ?></td>
+                    <td><?= Yii::$app->formatter->asDatetime($product->date_create, 'dd.MM.Y H:i:s') ?></td>
                     <td><?= $product->getStatusVerify() ?></td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Product Actions">
@@ -58,11 +60,6 @@ use yii\helpers\Url;
                                 <i class="fas fa-check"></i> Подтвердить
                             </a>
 
-                            <!-- Вторая кнопка: для отмены модерации -->
-                            <a href="<?= Url::to(['admin/moderate-cancel', 'id' => $product->id]) ?>"
-                               class="btn btn-danger btn-sm">
-                                <i class="fas fa-times-circle"></i> Отменить
-                            </a>
                         </div>
                     </td>
                 </tr>
