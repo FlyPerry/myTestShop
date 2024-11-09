@@ -2,6 +2,7 @@
 /**
  * @var Category $categoriesList
  * @var Catalog $catalogList ;
+ * @var Catalog $product ;
  * @var string $type
  */
 
@@ -9,6 +10,7 @@ use app\models\Catalog;
 use app\models\Category;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 
 ?>
 <style>
@@ -30,13 +32,13 @@ use yii\helpers\Url;
 
                 switch ($id) {
                     case 'man':
-                        $result = Yii::t('app','beru');;
+                        $result = Yii::t('app', 'beru');;
                         break;
                     case 'women':
-                        $result = Yii::t('app','dayu');;
+                        $result = Yii::t('app', 'dayu');;
                         break;
                     case 'work':
-                        $result = Yii::t('app','work');
+                        $result = Yii::t('app', 'work');
 
                         break;
                     default:
@@ -51,9 +53,9 @@ use yii\helpers\Url;
             <!-- Sidebar for categories -->
             <div class="col-md-3">
                 <div class="sidebar">
-                    <h5><?=Yii::t('app','change-category')?></h5>
+                    <h5><?= Yii::t('app', 'change-category') ?></h5>
                     <ul class="category-list">
-                        <li><a href="/catalog/<?= $type; ?>"><?=Yii::t('app','all-categories')?></a></li>
+                        <li><a href="/catalog/<?= $type; ?>"><?= Yii::t('app', 'all-categories') ?></a></li>
                         <?php foreach ($categoriesList as $category): ?>
                             <li class="d-flex justify-content-between">
                                 <?= Html::a("{$category->getName()}"
@@ -71,13 +73,19 @@ use yii\helpers\Url;
                 <div class="row">
                     <!-- Product item -->
                     <?php foreach ($catalogList as $product): ?>
+                        <?php $mainPhoto = false;?>
+                        <?php foreach ($product->getPhotos() as $photo) {
+                            $mainPhoto = '/' . $photo->photo;
+                            break;
+                        } ?>
                         <div class="col-md-3 mb-4">
                             <?php $insideHtml = Html::tag('div',
-                                Html::img('https://placehold.co/200', ['alt' => $product->name, 'class' => 'img-fluid']) .
+                                Html::img($mainPhoto ?: 'https://placehold.co/200', ['alt' => $product->name, 'class' => 'img-fluid']) .
                                 Html::tag('p', $product->name), ['class' => 'product-item']); ?>
                             <?= Html::a($insideHtml, '/catalog/product/' . $product->id); ?>
                         </div>
-                    <?php endforeach; ?>
+
+                        <?php  endforeach; ?>
                 </div>
             </div>
         </div>

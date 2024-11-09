@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
+
 /**
  * This is the model class for table "catalog".
  *
@@ -26,6 +27,7 @@ class Catalog extends \yii\db\ActiveRecord
     const VERIFY_SUCCESS = 1; // подтверждённые
     const VERIFY_PENDING = 2; // на модерации
     public $imageFiles;
+
     /**
      * {@inheritdoc}
      */
@@ -59,17 +61,17 @@ class Catalog extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'Пользователь',
-            'category' => 'Категория',
-            'name' => 'Название товара',
-            'description' => 'Описание',
-            'deleted' => 'Удалено',
-            'date_create' => 'Дата создания',
-            'date_update' => 'Дата обновления',
-            'verify' => 'Верифицировано',
-            'danger' => 'Требует внимания',
-            'youtubeLink' => 'YouTube Ссылка', // Лейбл для нового поля
-            'categoryName' => 'Название категории', // Виртуальное поле
+            'user_id' => Yii::t('app', 'user'),
+            'category' => Yii::t('app', 'category'),
+            'name' => Yii::t('app', 'name'),
+            'description' => Yii::t('app', 'description'),
+            'deleted' => Yii::t('app', 'deleted'),
+            'date_create' => Yii::t('app', 'date_create'),
+            'date_update' => Yii::t('app', 'date_update'),
+            'verify' => Yii::t('app', 'verify'),
+            'danger' => Yii::t('app', 'danger'),
+            'youtubeLink' => Yii::t('app', 'youtubeLink'),
+            'categoryName' => Yii::t('app', 'categoryName'),
         ];
     }
 
@@ -141,10 +143,11 @@ class Catalog extends \yii\db\ActiveRecord
         $photos = $this->getPhotos();
         $paths = [];
         foreach ($photos as $photo) {
-            $paths[] = Yii::getAlias('@webroot/uploads/user/' . $this->user_id . '/' . $this->id . '/' . $photo->photo);
+            $paths [] = '/' . $photo->photo;
         }
         return $paths;
     }
+
     public function validateYoutubeLink($attribute, $params, $validator)
     {
         if (!$this->hasErrors()) {
@@ -154,19 +157,21 @@ class Catalog extends \yii\db\ActiveRecord
             }
         }
     }
+
     public function getStatusVerify()
     {
         switch ($this->verify) {
             case self::VERIFY_REJECT:
-                return '<span class="badge bg-danger">'.Yii::t('app','rejected').'</span>';
+                return '<span class="badge bg-danger">' . Yii::t('app', 'rejected') . '</span>';
             case self::VERIFY_SUCCESS:
-                return '<span class="badge bg-success">'.Yii::t('app','verified').'</span>';
+                return '<span class="badge bg-success">' . Yii::t('app', 'verified') . '</span>';
             case self::VERIFY_PENDING:
-                return '<span class="badge bg-warning">'.Yii::t('app','pending').'</span>';
+                return '<span class="badge bg-warning">' . Yii::t('app', 'pending') . '</span>';
             default:
                 return '';
         }
     }
+
     public function uploadPhotos()
     {
         if ($this->validate()) {
@@ -198,7 +203,8 @@ class Catalog extends \yii\db\ActiveRecord
         }
     }
 
-    public static function getYoutubeLink(){
+    public static function getYoutubeLink()
+    {
         return true;
     }
 }

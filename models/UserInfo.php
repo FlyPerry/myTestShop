@@ -32,12 +32,12 @@ class UserInfo extends ActiveRecord
     {
 
         return [
-            'lastname' => 'Фамилия',
-            'firstname' => 'Имя',
-            'bio' => 'Биография',
-            'contactPhone' => 'Контактный телефон',
-            'photo' => 'Фото',
-            'city' => 'Город',
+            'lastname' => \Yii::t('app', 'lastname'),
+            'firstname' => \Yii::t('app', 'firstname'),
+            'bio' => \Yii::t('app', 'bio'),
+            'contactPhone' => \Yii::t('app', 'contactPhone'),
+            'photo' => \Yii::t('app', 'photo'),
+            'city' => \Yii::t('app', 'city'),
         ];
     }
 
@@ -54,7 +54,8 @@ class UserInfo extends ActiveRecord
         return $lastname . ' ' . $firstname;
     }
 
-    public function getPhoto(){
-        return !is_null($this->photo) ? '/'.$this->photo : "https://placehold.co/150x150";
+    public function getPhoto()
+    {
+        return !is_null($this->photo) ? '/' . $this->photo : "https://placehold.co/150x150";
     }
 }

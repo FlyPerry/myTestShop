@@ -85,7 +85,7 @@ if ($cookies->has('ChangedCity')): ?>
                 <!-- Dropdown for City Selection -->
                 <li class="nav-item">
                     <button class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#locationModal">
-                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName">Павлодар</span>
+                        <?= Yii::t('app', 'city-place') ?>: <span id="cityName">Нас. Пункт</span>
                     </button>
                 </li>
 
@@ -120,7 +120,8 @@ if ($cookies->has('ChangedCity')): ?>
                     <!-- Login/Register Button with User Icon -->
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">
-                            <i class="fa fa-user" aria-hidden="true"></i> Вход / Регистрация
+                            <i class="fa fa-user" aria-hidden="true"></i> <?= Yii::t('app', 'login') ?>
+                            / <?= Yii::t('app', 'register') ?>
                         </a>
                     </li>
                 <?php else: ?>
@@ -142,7 +143,8 @@ if ($cookies->has('ChangedCity')): ?>
         <div class="modal-dialog modal-lg modal-centered" style="max-width: 30vw;">
             <div class="modal-content">
                 <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title" id="authModalLabel">Регистрация / Вход</h5>
+                    <h5 class="modal-title" id="authModalLabel"><?= Yii::t('app', 'register') ?>
+                        / <?= Yii::t('app', 'login') ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -235,10 +237,10 @@ if ($cookies->has('ChangedCity')): ?>
                 </div>
                 <div class="modal-footer">
                     <?php if (Yii::$app->user->identity->getRole() == 1)
-                        echo Html::a('Админ Панель', '/admin', ['class' => 'btn btn-info']);
+                        echo Html::a(Yii::t('app', 'admin-panel'), '/admin', ['class' => 'btn btn-info']);
                     ?>
-                    <?= Html::a('Личный кабинет', '/user/profile', ['class' => 'btn btn-primary']) ?>
-                    <?= Html::a('Выйти', '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
+                    <?= Html::a(Yii::t('app','personal-cabinet'), '/user/profile', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('app', 'exit'), '/site/logout', ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
                 </div>
             </div>
         </div>
@@ -266,7 +268,7 @@ if ($cookies->has('ChangedCity')): ?>
             <div class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" id="sidebarMenu" tabindex="-1"
                  aria-labelledby="sidebarMenuLabel">
                 <div class="offcanvas-header d-md-none"> <!-- Заголовок и кнопка закрытия только на мобильных -->
-                    <h5 class="offcanvas-title text-white" id="sidebarMenuLabel">Личный кабинет</h5>
+                    <h5 class="offcanvas-title text-white" id="sidebarMenuLabel"><?=Yii::t('app', 'personal-cabinet')?></h5>
                     <button type="button" class="btn-close bg-white btn-close-white" id="canvasClose"
                             data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
                 </div>
@@ -275,30 +277,34 @@ if ($cookies->has('ChangedCity')): ?>
                         <li class="nav-item">
                             <a href="/user/dashboard"
                                class="nav-link <?= isset($active['dashboard']) ? $active['dashboard'] : '' ?>">
-                                <i class="fa-solid fa-table-list"></i> Инф. Панель
+                                <i class="fa-solid fa-table-list"></i> <?=Yii::t('app', 'infPanel')?>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/profile"
                                class="nav-link <?= isset($active['profile']) ? $active['profile'] : '' ?>"><i
-                                        class="fa-regular fa-id-badge"></i> Мой профиль</a>
+                                        class="fa-regular fa-id-badge"></i> <?=Yii::t('app', 'myProfile')?>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/orders"
                                class="nav-link <?= isset($active['orders']) ? $active['orders'] : '' ?>"><i
-                                        class="fa-solid fa-bars-staggered"></i> Подать объявление</a>
+                                        class="fa-solid fa-bars-staggered"></i> <?=Yii::t('app', 'sendOrder')?>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/sms" class="nav-link <?= isset($active['sms']) ? $active['sms'] : '' ?>"><i
-                                        class="fas fa-envelope"></i> Сообщения</a>
+                                        class="fas fa-envelope"></i> <?=Yii::t('app', 'sms')?>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/help"
                                class="nav-link <?= isset($active['help']) ? $active['help'] : '' ?>"><i
-                                        class="fas fa-question-circle"></i> Помощь</a>
+                                        class="fas fa-question-circle"></i> <?=Yii::t('app', 'help')?>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> Выйти', '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
+                            <?= Html::a('<i class="fa-solid fa-person-walking-arrow-right"></i> '.Yii::t('app', 'exit'), '/site/logout', ['class' => 'nav-link', 'data-method' => 'post']) ?>
                         </li>
                     </ul>
                 </div>

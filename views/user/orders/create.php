@@ -29,15 +29,15 @@ $this->title = 'Создание нового товара в каталоге';
             <!-- Радиобаттоны для фильтрации категорий -->
             <div class="form-group">
                 <label>Тип категории</label><br>
-                <?= Html::radio('category_type', false, ['value' => 'man', 'label' => 'Беру', 'class' => 'category-type']) ?>
-                <?= Html::radio('category_type', false, ['value' => 'women', 'label' => 'Даю', 'class' => 'category-type']) ?>
-                <?= Html::radio('category_type', false, ['value' => 'work', 'label' => 'Работа', 'class' => 'category-type']) ?>
+                <?= Html::radio('category_type', false, ['value' => 'man', 'label' => Yii::t('app', 'dayu'), 'class' => 'category-type']) ?>
+                <?= Html::radio('category_type', false, ['value' => 'women', 'label' => Yii::t('app', 'beru'), 'class' => 'category-type']) ?>
+                <?= Html::radio('category_type', false, ['value' => 'work', 'label' => Yii::t('app', 'work'), 'class' => 'category-type']) ?>
             </div>
             <!-- Поле для выбора категории -->
             <?= $form->field($model, 'category')->dropDownList(
-                ArrayHelper::map($categories, 'id', 'name'), // Изначально все категории
-                ['prompt' => 'Выберите категорию', 'id' => 'category-dropdown', 'disabled' => true] // ID для JS
-            )->label('Категория') ?>
+                ArrayHelper::map($categories, 'id', Yii::$app->language === 'kz-KZ' ? 'namekz' : 'name'), // Изначально все категории
+                ['prompt' => Yii::t('app', 'change-category'), 'id' => 'category-dropdown', 'disabled' => true] // ID для JS
+            )->label(Yii::t('app', 'category')) ?>
 
             <!-- Поле для ввода имени -->
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -46,7 +46,7 @@ $this->title = 'Создание нового товара в каталоге';
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
             <!-- Поле для загрузки нескольких изображений -->
-            <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'id' => 'image-input'])->label('Фотографии товара') ?>
+            <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'id' => 'image-input'])->label(Yii::t('app', 'photo')) ?>
 
             <div id="image-preview" style="display: flex; flex-wrap: wrap; margin-top: 10px;"></div>
 
@@ -54,7 +54,7 @@ $this->title = 'Создание нового товара в каталоге';
             <?= $form->field($model, 'youtubeLink')->textInput(['maxlength' => true])->label('YouTube Ссылка') ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app', 'create'), ['class' => 'btn btn-success']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
@@ -63,11 +63,13 @@ $this->title = 'Создание нового товара в каталоге';
     </div>
 
     <?php
+
+    $catname = Yii::$app->language === 'kz-KZ' ? 'namekz' : 'name';
     // Передаем данные всех категорий для фильтрации через JavaScript
     $categoriesJson = json_encode(ArrayHelper::toArray($categories, [
         'app\models\Category' => [
             'id',
-            'name',
+            $catname,
             'type', // Здесь предполагается, что в таблице Category есть поле type, которое может принимать значения 'men', 'women' или 'services'
         ]
     ]));
@@ -89,7 +91,7 @@ $this->title = 'Создание нового товара в каталоге';
 
         // Добавляем отфильтрованные категории в выпадающий список
         categories.forEach(function(category) {
-            categoryDropdown.append('<option value="' + category.id + '">' + category.name + '</option>');
+            categoryDropdown.append('<option value="' + category.id + '">' + category.$catname + '</option>');
         });
     }
 
@@ -106,7 +108,7 @@ JS
         , View::POS_READY);
     ?>
     <script>
-        document.getElementById('image-input').addEventListener('change', function(event) {
+        document.getElementById('image-input').addEventListener('change', function (event) {
             const previewContainer = document.getElementById('image-preview');
             previewContainer.innerHTML = ''; // Clear previous previews
 
@@ -119,7 +121,7 @@ JS
                 if (file && file.type.startsWith('image/')) {
                     const reader = new FileReader();
 
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         // Create an img element
                         const img = document.createElement('img');
                         img.src = e.target.result; // Set the source to the file data

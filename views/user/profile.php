@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="col-md-8">
-                <h3>Редактировать профиль</h3>
+                <h3><?=Yii::t('app','profileEdit');?></h3>
                 <?php $form = ActiveForm::begin(['action' => ['user/profile/update'], 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 
                 <?= $form->field($userInfo, 'firstname')->textInput(['value' => $userInfo->firstname]) ?>
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($userInfo, 'contactPhone')->textInput(['value' => $userInfo->contactPhone]) ?>
                 <?= $form->field($userInfo,'city')->hiddenInput(['value'=>$userInfo->city])->label(false);?>
 
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary"><?=Yii::t('app','save')?></button>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

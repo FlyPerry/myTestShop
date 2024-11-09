@@ -22,18 +22,18 @@ $this->title = 'Обновить: ' . $model->name;
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
                 <?= $form->field($model, 'category')->dropDownList(
-                    ArrayHelper::map($categories, 'id', 'name'), // Изначально все категории
-                    ['prompt' => 'Выберите категорию', 'id' => 'category-dropdown'] // ID для JS
-                )->label('Категория') ?>
+                    ArrayHelper::map($categories, 'id', Yii::$app->language === 'kz-KZ'?'namekz':'name'), // Изначально все категории
+                    ['prompt' => Yii::t('app','change-category'), 'id' => 'category-dropdown'] // ID для JS
+                )->label(Yii::t('app','category')) ?>
             </div>
             <div class="col-8">
-                <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'id' => 'image-input'])->label('Фотографии товара') ?>
+                <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'id' => 'image-input'])->label(Yii::t('app','photo')) ?>
             </div>
         </div>
         <!-- Поле для загрузки фотографий -->
 
         <div class="form-group">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('app','save'), ['class' => 'btn btn-success']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

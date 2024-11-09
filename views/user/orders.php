@@ -14,7 +14,7 @@ use \yii\helpers\Html;
 <div class="tab-pane fade show active" id="catalog-tab">
     <div class="row mb-3">
         <div class="col">
-            <h2>Мой каталог</h2>
+            <h2><?=Yii::t('app','myCatalog');?></h2>
         </div>
         <div class="col text-end">
             <?= Html::a('Создать', Url::to('order/create'), ['class' => 'btn btn-success']) ?>
@@ -26,12 +26,12 @@ use \yii\helpers\Html;
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>Наименование</th>
-                <th>Описание</th>
-                <th>Фото</th>
-                <th>Дата создания</th>
-                <th>Подтверждено</th>
-                <th style="width: 1%">Действия</th>
+                <th><?=Yii::t('app','tableNaimenovanie');?></th>
+                <th><?=Yii::t('app','tableDiscription');?></th>
+                <th><?=Yii::t('app','tablePhoto');?></th>
+                <th><?=Yii::t('app','tableDateCreate');?></th>
+                <th><?=Yii::t('app','tapleVerify');?></th>
+                <th style="width: 1%"><?=Yii::t('app','tableActions');?></th>
             </tr>
             </thead>
             <tbody>
@@ -41,7 +41,7 @@ use \yii\helpers\Html;
                     <td class="text-truncate" style="max-width: 150px;"><?= $product->description; ?></td>
                     <td>
                         <?php foreach ($product->getPhotos() as $photo): ?>
-                            <?= Html::img('/' . Url::to($photo->photo) ?? 'https://placehold.co/100x100',
+                            <?= Html::img('/' . Url::to($photo->photo) ?: 'https://placehold.co/100x100',
                                 ['alt' => "Фото товара", 'class' => 'img-thumbnail', 'style' => 'width: 80px; height: auto;']); ?>
                         <?php endforeach; ?>
                     </td>
@@ -60,12 +60,12 @@ use \yii\helpers\Html;
                             <?= Html::a('<i class="fa fa-trash"></i>', ['/user/order/delete/' . $product->id], [
                                 'class' => 'btn btn-danger btn-sm',
                                 'data' => [
-                                    'confirm' => 'Вы уверены, что хотите удалить этот заказ?',
+                                    'confirm' => Yii::t('app','deleteConfirmMessage'),
                                     'method' => 'post',
                                 ],
                             ]) ?>
                             <a href="<?= $product->getFinishUrl() ?>" class="btn btn-success btn-sm" target="_blank">
-                                <i class="fas fa-check"></i>
+                                <i class="fa-solid fa-earth-americas"></i>
                             </a>
                         </div>
                     </td>

@@ -141,6 +141,8 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->redirect(['site/index']);
+        }else{
+            Yii::$app->session->setFlash('error', Yii::t('app','errorLogin'));
         }
 
         return $this->render('index');

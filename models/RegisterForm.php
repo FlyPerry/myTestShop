@@ -49,7 +49,7 @@ class RegisterForm extends Model
             if (!$userInfo->save()) {
                 // Если сохранение не удалось, вывод ошибок для отладки
                 \Yii::error('Ошибка при создании записи UserInfo: ' . json_encode($userInfo->getErrors()));
-                return false;
+                return throw new NotFoundHttpException('Такой пользователь уже существует');
             }
 
             // Авторизация после сохранения пользователя
@@ -59,7 +59,7 @@ class RegisterForm extends Model
 
         // Если сохранение пользователя не удалось
         \Yii::error('Ошибка при создании пользователя: ' . json_encode($user->getErrors()));
-        return false;
+        return throw new NotFoundHttpException('Такой пользователь уже существует');
     }
 
 }
