@@ -97,6 +97,7 @@ class SiteController extends Controller
 
     public function actionSubmitChangedCity()
     {
+
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         if (Yii::$app->request->isPost) {
@@ -110,21 +111,21 @@ class SiteController extends Controller
             // Добавляем куку для города
             $cookies->add(new \yii\web\Cookie([
                 'name' => 'ChangedCity',
-                'value' => $city,
+                'value' => $city?:0,
                 'expire' => time() + 86400 * 365, // 1 год
             ]));
 
             // Добавляем куку для района
             $cookies->add(new \yii\web\Cookie([
                 'name' => 'ChangedDistrict',
-                'value' => $district,
+                'value' => $district?:0,
                 'expire' => time() + 86400 * 365, // 1 год
             ]));
 
             // Добавляем куку для микрорайона
             $cookies->add(new \yii\web\Cookie([
                 'name' => 'ChangedNeighborhood',
-                'value' => $neighborhood,
+                'value' => $neighborhood?:0,
                 'expire' => time() + 86400 * 365, // 1 год
             ]));
 

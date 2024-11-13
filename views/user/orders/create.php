@@ -29,8 +29,8 @@ $this->title = 'Создание нового товара в каталоге';
             <!-- Радиобаттоны для фильтрации категорий -->
             <div class="form-group">
                 <label>Тип категории</label><br>
-                <?= Html::radio('category_type', false, ['value' => 'man', 'label' => Yii::t('app', 'dayu'), 'class' => 'category-type']) ?>
-                <?= Html::radio('category_type', false, ['value' => 'women', 'label' => Yii::t('app', 'beru'), 'class' => 'category-type']) ?>
+                <?= Html::radio('category_type', false, ['value' => 'women', 'label' => Yii::t('app', 'dayu'), 'class' => 'category-type']) ?>
+                <?= Html::radio('category_type', false, ['value' => 'man', 'label' => Yii::t('app', 'beru'), 'class' => 'category-type']) ?>
                 <?= Html::radio('category_type', false, ['value' => 'work', 'label' => Yii::t('app', 'work'), 'class' => 'category-type']) ?>
             </div>
             <!-- Поле для выбора категории -->
