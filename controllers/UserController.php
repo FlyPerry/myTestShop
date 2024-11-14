@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\components\modal\selectCity\models\District;
+use app\components\modal\selectCity\models\Region;
 use app\models\Catalog;
 use app\models\CatalogPhoto;
 use app\models\Category;
 use app\models\User;
 use app\models\UserInfo;
 use yii\db\StaleObjectException;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -232,6 +235,7 @@ class UserController extends Controller
     {
         $model = new Catalog();
         $categories = Category::find()->all();
+        $regions = Region::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Загружаем файлы изображений
@@ -247,14 +251,26 @@ class UserController extends Controller
             Yii::error($model->errors);
         }
 
-        return $this->render('orders/create', ['model' => $model, 'categories' => $categories]);
+        return $this->render('orders/create', ['model' => $model, 'categories' => $categories, 'regions' => $regions]);
     }
+
+    public function actionGetDistrictsForRegion($region_id)
+    {
+        $districts = District::find()->where(['region_id' => $region_id])->asArray()->all();
+        $result = [];
+        foreach ($districts as $district) {
+            $result[] = ['id' => $district['id'], 'name' => $district['name']];
+        }
+        return \yii\helpers\Json::encode($result);
+
+    }
+
 
     public function actionOrdersUpdate($id)
     {
         // Находим модель по ID
         $model = Catalog::findOne($id);
-        $categories = Category::find()->andWhere(['type'=>$model->getCategory()->one()->type])->all();
+        $categories = Category::find()->andWhere(['type' => $model->getCategory()->one()->type])->all();
 
         // Проверяем, существует ли модель
         if (!$model) {

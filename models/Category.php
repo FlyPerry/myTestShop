@@ -77,6 +77,19 @@ class Category extends ActiveRecord
 
     public function getCountProducts()
     {
-        return Catalog::find()->andWhere(['category' => $this->id, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->count();
+        $userRegion = Yii::$app->request->cookies->getValue('ChangedCity');
+        $userDistrict = Yii::$app->request->cookies->getValue('ChangedDistrict');
+        $countQuery = Catalog::find()->andWhere([
+            'category' => $this->id,
+            'deleted' => 0,
+            'verify' => Catalog::VERIFY_SUCCESS
+        ]);
+        if ($userRegion != 0) {
+            $countQuery->andWhere(['region' => $userRegion]);
+        }
+        if ($userDistrict != 0) {
+            $countQuery->andWhere(['district' => $userDistrict]);
+        }
+        return $countQuery->count();
     }
 }

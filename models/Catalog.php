@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\components\modal\selectCity\models\District;
+use app\components\modal\selectCity\models\Region;
 use Yii;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
@@ -20,6 +22,7 @@ use yii\web\UploadedFile;
  * @property int|null $verify
  * @property int|null $danger
  * @property string|null $categoryName Виртуальное свойство для названия категории
+ * @property string|null $regionName
  */
 class Catalog extends \yii\db\ActiveRecord
 {
@@ -43,7 +46,7 @@ class Catalog extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'category', 'name'], 'required'],
-            [['user_id', 'category', 'verify', 'danger'], 'integer'],
+            [['user_id', 'category', 'verify', 'district', 'region', 'danger'], 'integer'],
             [['deleted'], 'boolean'],
             [['description'], 'string'],
             [['date_create', 'date_update'], 'safe'],
@@ -130,6 +133,10 @@ class Catalog extends \yii\db\ActiveRecord
      */
     public function getPhotos()
     {
+        if ($this->id === null) {
+            return []; // Возвращаем пустой массив, если ID не установлен
+        }
+
         return CatalogPhoto::find()->where(['catalogID' => $this->id, 'deleted' => 0])->all();
     }
 
@@ -207,4 +214,41 @@ class Catalog extends \yii\db\ActiveRecord
     {
         return true;
     }
+    /**
+     * Связь с районом (district)
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDistrict()
+    {
+        return $this->hasOne(District::class, ['id' => 'district']);
+    }
+
+    /**
+     * Связь с регионом (region)
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(Region::class, ['id' => 'region']);
+    }
+    /**
+     * Виртуальное свойство для названия района
+     * @return string|null
+     */
+    public function getDistrictName()
+    {
+        $district = $this->getDistrict()->one();
+        return $district ? $district->name : null;
+    }
+
+    /**
+     * Виртуальное свойство для названия региона
+     * @return string|null
+     */
+    public function getRegionName()
+    {
+        $region = $this->getRegion()->one();
+        return $region ? $region->name : null;
+    }
+
 }

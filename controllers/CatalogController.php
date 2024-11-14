@@ -46,45 +46,66 @@ class CatalogController extends Controller
         return $this->redirect('/');
     }
 
-    public function actionMan($id = NULL)
+    public function actionMan($id = null)
     {
-        $queryCategories = Category::find()->andWhere(['type' => 'man'])->orderBy('name');
-        $categoriesList = $queryCategories->all();
-        if (!is_null($id)) {
-            $queryCategories->andWhere(['id' => $id]);
-        }
-        $categoriesFilter = $queryCategories->all();
-        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
-
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
-        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'man']);
+        return $this->renderCategoryPage('man', $id);
     }
 
-    public function actionWomen($id = NULL)
+    public function actionWomen($id = null)
     {
-        $queryCategories = Category::find()->andWhere(['type' => 'women'])->orderBy('name');
-        $categoriesList = $queryCategories->all();
-        if (!is_null($id)) {
-            $queryCategories->andWhere(['id' => $id]);
-        }
-        $categoriesFilter = $queryCategories->all();
-        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
-
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
-        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'women']);
+        return $this->renderCategoryPage('women', $id);
     }
+
+    /**
+     * Общий метод для рендеринга страниц категорий.
+     *
+     * @param string $type Тип категории (man или women)
+     * @param int|null $id Идентификатор категории (опционально)
+     * @return string
+     */
+    protected function renderCategoryPage($type, $id = null)
+    {
+        // Получение значений из cookies
+        $userRegion = Yii::$app->request->cookies->getValue('ChangedCity');
+        $userDistrict = Yii::$app->request->cookies->getValue('ChangedDistrict');
+
+        $queryCategories = Category::find()
+            ->where(['type' => $type])
+            ->orderBy('name');
+
+        // Получение категорий и создание списка идентификаторов
+        $categoriesList = $queryCategories->all();
+        $categoriesListArray = ArrayHelper::getColumn($categoriesList, 'id');
+
+        // Получение записей каталога
+        $catalogList = Catalog::find()
+            ->where([
+                'category' => $categoriesListArray,
+                'deleted' => 0,
+                'verify' => Catalog::VERIFY_SUCCESS,
+            ]);
+
+        if ($userRegion != 0) {
+            $catalogList->andWhere(['region' => $userRegion]);
+        }
+        if ($userDistrict != 0) {
+            $catalogList->andWhere(['district' => $userDistrict]);
+        }
+        if ($id !== null) {
+            $catalogList->andWhere(['category' => $id]);
+        }
+        $catalogList = $catalogList->all();
+
+        return $this->render('index', [
+            'categoriesList' => $categoriesList,
+            'catalogList' => $catalogList,
+            'type' => $type,
+        ]);
+    }
+
     public function actionWork($id = NULL)
     {
-        $queryCategories = Category::find()->andWhere(['type' => 'work'])->orderBy('name');
-        $categoriesList = $queryCategories->all();
-        if (!is_null($id)) {
-            $queryCategories->andWhere(['id' => $id]);
-        }
-        $categoriesFilter = $queryCategories->all();
-        $categoriesListArray = ArrayHelper::getColumn($categoriesFilter, 'id');
-
-        $catalogList = Catalog::find()->andWhere(['category' => $categoriesListArray, 'deleted' => 0, 'verify' => Catalog::VERIFY_SUCCESS])->all();
-        return $this->render('index', ['categoriesList' => $categoriesList, 'catalogList' => $catalogList, 'type' => 'work']);
+        return $this->renderCategoryPage('work', $id);
     }
 
     public function actionProduct($id)

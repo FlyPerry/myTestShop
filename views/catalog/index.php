@@ -72,9 +72,10 @@ use yii\helpers\Url;
             <div class="col-md-9">
                 <div class="row">
                     <!-- Product item -->
-                    <?php foreach ($catalogList as $product): ?>
-                        <?php $mainPhoto = false;?>
-                        <?php foreach ($product->getPhotos() as $photo) {
+                    <?php
+                    foreach ($catalogList as $product):
+                        $mainPhoto = false;
+                        foreach ($product->getPhotos() as $photo) {
                             $mainPhoto = '/' . $photo->photo;
                             break;
                         } ?>
@@ -85,7 +86,7 @@ use yii\helpers\Url;
                             <?= Html::a($insideHtml, '/catalog/product/' . $product->id); ?>
                         </div>
 
-                        <?php  endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

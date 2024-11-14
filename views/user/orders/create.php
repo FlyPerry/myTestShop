@@ -10,6 +10,7 @@ use yii\web\View;
 /* @var $model app\models\Catalog */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $categories \app\models\Category */
+/* @var $regions \app\components\modal\selectCity\models\Region */
 
 $this->title = 'Создание нового товара в каталоге';
 ?>
@@ -38,6 +39,16 @@ $this->title = 'Создание нового товара в каталоге';
                 ArrayHelper::map($categories, 'id', Yii::$app->language === 'kz-KZ' ? 'namekz' : 'name'), // Изначально все категории
                 ['prompt' => Yii::t('app', 'change-category'), 'id' => 'category-dropdown', 'disabled' => true] // ID для JS
             )->label(Yii::t('app', 'category')) ?>
+
+            <?= $form->field($model, 'region')->dropDownList(
+                ArrayHelper::map($regions, 'id', 'name'),
+                ['prompt' => Yii::t('app', 'change-region'), 'id' => 'region-dropdown'])->label(Yii::t('app', 'select-location'))
+            ?>
+            <?= $form->field($model, 'district')->dropDownList(
+                [],
+                ['prompt' => Yii::t('app', 'change-district'), 'id' => 'district-dropdown']
+            )->label(false) ?>
+
 
             <!-- Поле для ввода имени -->
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -102,6 +113,7 @@ $this->title = 'Создание нового товара в каталоге';
         categoryDropdown.removeAttr('disabled'); 
     });
 
+
     // Инициализация с фильтрацией мужских категорий по умолчанию
     // updateCategoryDropdown('men');
 JS
@@ -137,6 +149,36 @@ JS
                 }
             }
         });
+        $('#region-dropdown').on('change', function() {
+            var regionId = $(this).val();
+            $.ajax({
+                url: '/user/get-districts-for-region', // Замените на реальный URL действия
+                data: {region_id: regionId},
+                success: function(data) {
+                    // Если `data` приходит в виде строки JSON, преобразуем её в объект
+                    if (typeof data === "string") {
+                        data = JSON.parse(data);
+                    }
+
+                    var districtDropdown = $('#district-dropdown');
+                    districtDropdown.empty(); // Очистка текущих опций
+
+                    // Если данных нет
+                    if (data.length === 0) {
+                        districtDropdown.append('<option>' + '<?= Yii::t("app", "no-districts-available") ?>' + '</option>');
+                    } else {
+                        districtDropdown.append('<option value="">' + '<?= Yii::t("app", "change-district") ?>' + '</option>');
+                        data.forEach(function(district) {
+                            districtDropdown.append('<option value="' + district.id + '">' + district.name + '</option>');
+                        });
+                    }
+                },
+                error: function() {
+                    console.log('Error loading districts.');
+                }
+            });
+        });
+
     </script>
 
     <style>
